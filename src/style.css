@@ -21,12 +21,12 @@ body {
 }
 
 .conteiner {
-    max-width: 50vw;
+    min-width: 50vw;
     height: 70vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: space-between;
     border: 2px solid black;
     padding: 3rem;
     margin-top: 12vh;
@@ -142,7 +142,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 1vh;
     min-width: 30vw;
 }
 

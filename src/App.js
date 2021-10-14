@@ -27,8 +27,13 @@ function App() {
     setList(newData)
   } 
 
+  const filterAll =() =>{
+    console.log("xd")
+  }
+
   return (
     <div className="conteiner">
+      <div>
       <div className="todo">
         <h1>TODO</h1>
         <div className="input">
@@ -57,7 +62,7 @@ function App() {
       </div>
       <span className="filter">
         <span className="filter-buttons">
-          <button className="filter__button-all">all</button>
+          <button onClick={filterAll} className="filter__button-all">all</button>
           <button className="filter__button-done">done</button>
           <button className="filter__button-undone">undone</button>
         </span>
@@ -74,8 +79,9 @@ function App() {
       <div className="todo-main">
         <TodoList list={list} remove={removeItem} changeCondition={changeCondition}/>
       </div>
+      </div>
       <span className="changer">
-        <button className="changer__button">&gt;&gt;</button>
+        <button className="changer__button">&lt;&lt;</button>
         <button className="changer__button">1</button>
         <button className="changer__button">2</button>
         <button className="changer__button">3</button>
