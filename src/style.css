@@ -83,6 +83,7 @@ body {
     font-size: 0.9rem;
 }
 
+
 .filter__button-undone {
     background-color: white;
     color: black;
@@ -169,6 +170,9 @@ li {
 
 .todo-list__text {
     min-width: 6rem;
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }
 
 [data-tooltip] {
@@ -198,6 +202,7 @@ li {
 
 .todo-list__button {
     -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
     background-color: white;
     border: none;
     max-width: 3rem;
@@ -210,10 +215,16 @@ li {
 
 .todo-list__trashbin {
     -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+
     background-color: white;
     border: none;
 }
-
+.todo-list__date{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .todo-list__trashbin:hover {
     background-color: white;
     filter: invert(100%);

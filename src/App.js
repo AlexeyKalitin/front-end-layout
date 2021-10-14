@@ -5,13 +5,27 @@ import React, { useState } from 'react';
 import TodoList from "./components/TodoList";
 
 function App() {
-  const initialValue = ["2"]
-  const [list, setList] = useState(initialValue);
+  const [list, setList] = useState([]);
   const [value, setValue] = useState("");
 
   const handleChange = (event) => {
     setValue(event.target.value);
   }
+  const current = new Date();
+
+  const removeItem = id => {
+    setList(list.filter(x =>(x.key !== id)))
+  }
+
+  const changeCondition = el =>{
+    var newData = list.map(item => {
+      if (item.key === el) {
+        return Object.assign({}, item, { isDone: true })
+      }
+      return item
+    })
+    setList(newData)
+  } 
 
   return (
     <div className="conteiner">
@@ -21,7 +35,13 @@ function App() {
           <input
             onKeyDown={(ev) => {
               if (ev.keyCode == 13) {
-                setList([...list, value]);
+                const newElem={
+                  key:current.getTime(),
+                  text:value,
+                  date:`${current.getDay()}.${current.getMonth() + 1}.${current.getFullYear()} ${current.getHours()}:${current.getMinutes()}`,
+                  isDone:false
+                }
+                setList([...list,newElem])
                 setValue("")
               }
             }
@@ -52,7 +72,7 @@ function App() {
         </span>
       </span>
       <div className="todo-main">
-        <TodoList list={list} />
+        <TodoList list={list} remove={removeItem} changeCondition={changeCondition}/>
       </div>
       <span className="changer">
         <button className="changer__button">&gt;&gt;</button>
