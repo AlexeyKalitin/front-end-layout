@@ -4,9 +4,11 @@ import "./style-modules/style.css"
 import React, { useEffect, useState } from 'react';
 import TodoList from "./components/TodoList";
 import Changer from "./components/UI/Changer";
+
 function App() {
   const [list, setList] = useState([]);
   const [value, setValue] = useState("");
+  const [elemCount, setElemCount] = useState(Number(0));
   const [filterList, setFilterList] = useState([]);
   const [sortStatus, setSortStatus] = useState("up");
   const currentDate = new Date();
@@ -15,21 +17,21 @@ function App() {
     if (status === "all") {
       setFilterList(list)
     } else {
-      let newList = list.filter(item => item.isDone === status)
+      const newList = list.filter(item => item.isDone === status)
       setFilterList(newList);
     }
   }
 
   useEffect(() => {
     if (sortStatus === "up") {
-      let newArr2 = []
-      let newArr=filterList.sort((a,b) => a.key-b.key);
+      const newArr2 = []
+      const newArr=filterList.sort((a,b) => a.key-b.key);
       Object.assign(newArr2,newArr)
       setFilterList(newArr2) 
     }
     if(sortStatus === "down"){
-      let newArr2 = []
-      let newArr=filterList.sort((a,b) => b.key-a.key);
+      const newArr2 = []
+      const newArr=filterList.sort((a,b) => b.key-a.key);
       Object.assign(newArr2,newArr)
       setFilterList(newArr2) 
     }
@@ -65,7 +67,7 @@ function App() {
     <div className="conteiner">
       <div>
         <div className="todo">
-          <h1>TODO</h1>
+          <h1>ToDo</h1>
           <div className="input">
             <input
               onKeyDown={(ev) => {
@@ -114,10 +116,12 @@ function App() {
           </span>
         </span>
         <div className="todo-main">
-          <TodoList list={filterList} remove={removeItem} changeCondition={changeCondition} />
+          <TodoList count={elemCount} list={filterList} remove={removeItem} changeCondition={changeCondition} />
+          
         </div>
       </div>
       <Changer/>
+      
     </div>
   );
 }

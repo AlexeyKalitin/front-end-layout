@@ -1,14 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
 *,
 *::before,
 *::after {
     box-sizing: border-box;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Architects Daughter', cursive;
+    
 }
 
 body {
     margin: 0;
-    font-size: 1rem;
+    font-size: 1.5rem;
     font-weight: 400;
     line-height: 1.5;
     background-color: #fff;
@@ -28,13 +29,16 @@ body {
     justify-content: space-between;
     border: 2px solid black;
     padding: 3rem;
-    margin-top: 12vh;
+    margin-top: 5vh;
+    border-radius: 3rem;
 }
 
 .todo__text {
     width: 40vw;
-    height: 2rem;
+    height: 3rem;
     border: 2px solid black;
+    border-radius: 0.5rem;
+    font-size: 2rem;
 }
 
 .changer__button {
@@ -44,6 +48,8 @@ body {
     transition-duration: 0.4s;
     background-color: white;
     cursor: pointer;
+    border-radius: 1rem;
+    font-size: 1.2rem;
 }
 
 .changer__button:hover {
@@ -72,8 +78,10 @@ body {
     color: black;
     border: 2px solid black;
     transition-duration: 0.4s;
-    font-size: 0.9rem;
     cursor: pointer;
+    border-radius: 1rem;
+    font-size: 1.5rem;
+    padding: 0.5rem;
 }
 
 .filter__button-done {
@@ -85,6 +93,9 @@ body {
     margin-left: 2px;
     margin-right: 2px;
     cursor: pointer;
+    border-radius: 1rem;
+    font-size: 1.5rem;
+    padding: 0.5rem;
 }
 
 
@@ -95,6 +106,10 @@ body {
     transition-duration: 0.4s;
     font-size: 0.9rem;
     cursor: pointer;
+    border-radius: 1rem;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+
 }
 
 .filter__button-all:hover {
@@ -105,6 +120,7 @@ body {
 .filter__button-done:hover {
     background-color: black;
     color: white;
+    
 }
 
 .filter__button-undone:hover {
@@ -117,6 +133,7 @@ body {
     border: white;
     transition-duration: 0.4s;
     cursor: pointer;
+    border-radius: 1rem;
 }
 
 .filter__arrow-up {
@@ -124,6 +141,8 @@ body {
     border: white;
     transition-duration: 0.4s;
     cursor: pointer;
+    border-radius: 0.7rem;
+
 }
 
 .filter__arrow-up:hover {
@@ -173,6 +192,7 @@ li {
     margin-top: 10px;
     width: 40vw;
     height: 8vh;
+    border-radius: 1rem;
 }
 
 .todo-list__text {
@@ -207,6 +227,11 @@ li {
     top: 2em;
 }
 
+.input{
+    border-radius: 1rem;
+  
+}
+
 .todo-list__button {
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
@@ -215,6 +240,9 @@ li {
     cursor: pointer;
     max-width: 3rem;
     margin-right: 2rem;
+    border-top-left-radius: 0.85rem;
+    border-bottom-left-radius: 0.85rem;
+
 }
 
 .todo-list__button:hover {
@@ -227,6 +255,8 @@ li {
     cursor: pointer;
     background-color: white;
     border: none;
+    border-bottom-right-radius: 0.85rem;
+    border-top-right-radius: 0.85rem;
 }
 .todo-list__date{
     display: flex;

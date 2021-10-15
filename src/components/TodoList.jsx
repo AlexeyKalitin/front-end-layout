@@ -4,13 +4,13 @@ import trashbin from "../trash.svg";
 import done from "../icon.svg";
 
 function TodoList(props) {
-  const { list, remove, changeCondition } = props;
+  const { list, remove, changeCondition, ElemCount } = props;
   if (list.length === 0) {
     return <h1 style={{ marginTop: "2vw" }}>Nothing...</h1>;
   } else {
     return (
       <ul className="todo-list">
-        {list.map( task => {
+        {list.slice(0,4).map( task => {
           return (
             <li key={task.key}>
               {task.isDone === false && (
