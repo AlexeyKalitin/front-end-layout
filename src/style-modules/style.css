@@ -22,7 +22,6 @@ body {
 
 .conteiner {
     min-width: 50vw;
-    height: 70vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -44,6 +43,7 @@ body {
     /* Safari */
     transition-duration: 0.4s;
     background-color: white;
+    cursor: pointer;
 }
 
 .changer__button:hover {
@@ -73,6 +73,7 @@ body {
     border: 2px solid black;
     transition-duration: 0.4s;
     font-size: 0.9rem;
+    cursor: pointer;
 }
 
 .filter__button-done {
@@ -81,6 +82,9 @@ body {
     border: 2px solid black;
     transition-duration: 0.4s;
     font-size: 0.9rem;
+    margin-left: 2px;
+    margin-right: 2px;
+    cursor: pointer;
 }
 
 
@@ -90,6 +94,7 @@ body {
     border: 2px solid black;
     transition-duration: 0.4s;
     font-size: 0.9rem;
+    cursor: pointer;
 }
 
 .filter__button-all:hover {
@@ -111,11 +116,14 @@ body {
     background-color: white;
     border: white;
     transition-duration: 0.4s;
+    cursor: pointer;
 }
 
 .filter__arrow-up {
     background-color: white;
     border: white;
+    transition-duration: 0.4s;
+    cursor: pointer;
 }
 
 .filter__arrow-up:hover {
@@ -204,6 +212,7 @@ li {
     transition-duration: 0.4s;
     background-color: white;
     border: none;
+    cursor: pointer;
     max-width: 3rem;
     margin-right: 2rem;
 }
@@ -215,7 +224,7 @@ li {
 .todo-list__trashbin {
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
-
+    cursor: pointer;
     background-color: white;
     border: none;
 }

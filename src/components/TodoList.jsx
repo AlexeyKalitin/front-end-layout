@@ -1,46 +1,44 @@
-import React from "react";
-import "../style.css";
+import "../style-modules/style.css";
 import undone from "../undone.svg";
 import trashbin from "../trash.svg";
 import done from "../icon.svg";
-import arrowdown from "../arrowdown.svg";
 
 function TodoList(props) {
   const { list, remove, changeCondition } = props;
-  console.log(list);
-  if(list.length===0)
-  {return <h1 style={{marginTop: "2vw"}}>Nothing...</h1>}
-  else{
+  if (list.length === 0) {
+    return <h1 style={{ marginTop: "2vw" }}>Nothing...</h1>;
+  } else {
     return (
       <ul className="todo-list">
-        {list.map((task, index) => {
+        {list.map( task => {
           return (
-            <li key={list.key}>
-              {task.isDone ===false && (
-                <button 
-                onClick={() => changeCondition(task.key)}
-                data-tooltip="Undone" className="todo-list__button">
-                  <img src={undone} className="todo-list__picture" />
+            <li key={task.key}>
+              {task.isDone === false && (
+                <button
+                  onClick={() => changeCondition(task.key)}
+                  data-tooltip="Undone"
+                  className="todo-list__button"
+                >
+                  <img alt="undone" src={undone} className="todo-list__picture" />
                 </button>
               )}
-  
-              {task.isDone ===true && (
+
+              {task.isDone === true && (
                 <button data-tooltip="Done" className="todo-list__button">
-                  <img src={done} className="todo-list__picture" />
+                  <img alt="done" src={done} className="todo-list__picture" />
                 </button>
               )}
-  
-              <p className="todo-list__text" key={index}>
+
+              <p className="todo-list__text">
                 {task.text}
               </p>
               <p className="todo-list__date">{task.date}</p>
-  
               <button
                 onClick={() => remove(task.key)}
-                title="Delete task"
+                data-tooltip="Delete"
                 className="todo-list__trashbin"
               >
-                <img src={trashbin} alt="Кнопка «button»" />
+                <img alt="delete" src={trashbin}/>
               </button>
             </li>
           );
@@ -48,7 +46,6 @@ function TodoList(props) {
       </ul>
     );
   }
-  
 }
 
 export default TodoList;
