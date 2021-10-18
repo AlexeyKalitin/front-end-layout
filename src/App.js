@@ -9,7 +9,6 @@ function App() {
   const [value, setValue] = useState("");
   const [filterList, setFilterList] = useState([]);
   const [sortStatus, setSortStatus] = useState("up");
-  const [pressEnter, setPressEnter] = useState();
 
   function listFilter(status) {
     if (status === "all") {
@@ -62,13 +61,15 @@ function App() {
   }
 
   const handlerSetSortStatus = sortStatus => {
-    if (sortStatus === "up") {
-      setFilterList(list.sort((a, b) => a.key - b.key))
-      console.log(list.sort((a, b) => a.key - b.key))
-    }
+    const newMass = []
+
+    let sortedTodos = list.sort((a, b) => a.key - b.key)
     if (sortStatus === "down") {
-      setFilterList(list.sort((a, b) => b.key - a.key))
+      sortedTodos = list.sort((a, b) => b.key - a.key)
     }
+
+    Object.assign(newMass, sortedTodos)
+    setFilterList(newMass);
   }
 
   return (
@@ -78,12 +79,12 @@ function App() {
           <h1>ToDo</h1>
           <Input newElemSetter={newElem => handlerNewElemSetter(newElem)}></Input>
         </div>
-        <Filter listFilter={status=>listFilter(status)} setSortStatus={sortStatus=>handlerSetSortStatus(sortStatus)}/>
+        <Filter listFilter={(status) => listFilter(status)} setSortStatus={(sortStatus) => handlerSetSortStatus(sortStatus)} />
         <div className="todo-main">
         </div>
       </div>
-      <TodoList todos={filterList} removeItem = {(id) => removeItem(id)} changeCondition={(elem) => changeCondition(elem)}></TodoList>
-      </div>
+      <TodoList todos={filterList} removeItem={(id) => removeItem(id)} changeCondition={(elem) => changeCondition(elem)}></TodoList>
+    </div>
   );
 
 }

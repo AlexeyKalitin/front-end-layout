@@ -1,13 +1,13 @@
 import "../style-modules/style.css";
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 
 function Input(props) {
   const [value, setValue] = useState("");
   const currentDate = new Date();
-  
+
   const handleChange = (event) => {
     setValue(event.target.value);
-  }
+  };
 
   return (
     <div className="input">
@@ -21,12 +21,11 @@ function Input(props) {
                 currentDate.getMonth() + 1
               }.${currentDate.getFullYear()} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`,
               isDone: false,
-            }
+            };
             setValue("");
-            props.newElemSetter(newElem)
+            props.newElemSetter(newElem);
           }
         }}
-        
         value={value}
         onChange={handleChange}
         placeholder="Type task"
