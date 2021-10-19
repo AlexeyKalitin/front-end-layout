@@ -9,13 +9,13 @@ function App() {
   const [value, setValue] = useState("");
   const [filterList, setFilterList] = useState([]);
   const [sortStatus, setSortStatus] = useState("up");
+  console.log("render")
 
   function listFilter(status) {
     if (status === "all") {
       setFilterList(list)
     } else {
-      const newList = list.filter(item => item.isDone === status)
-      setFilterList(newList);
+      setFilterList(list.filter(item => item.isDone === status));
     }
   }
 
@@ -63,9 +63,9 @@ function App() {
   const handlerSetSortStatus = sortStatus => {
     const newMass = []
 
-    let sortedTodos = list.sort((a, b) => a.key - b.key)
+    let sortedTodos = filterList.sort((a, b) => a.key - b.key)
     if (sortStatus === "down") {
-      sortedTodos = list.sort((a, b) => b.key - a.key)
+      sortedTodos = filterList.sort((a, b) => b.key - a.key)
     }
 
     Object.assign(newMass, sortedTodos)

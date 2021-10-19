@@ -24,7 +24,7 @@ function TodoElement(props) {
         </button>
       )}
 
-      <p onClick={() => console.log("2")} className="todo-list__text">
+      <p className="todo-list__text">
         {todo.text}
       </p>
       <p className="todo-list__date">{todo.date}</p>

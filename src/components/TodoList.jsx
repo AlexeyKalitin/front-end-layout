@@ -3,8 +3,7 @@ import TodosElement from "./TodoElement";
 
 function TodoList(props) {
   const { todos, removeItem, changeCondition } = props;
-  console.log("2212");
-  console.log(removeItem);
+
   if (todos.length === 0) {
     return <h1 style={{ marginTop: "2vw" }}>Nothing...</h1>;
   } else {
