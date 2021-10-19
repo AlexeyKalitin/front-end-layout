@@ -47,6 +47,8 @@ function App() {
       }
       return item
     })
+    console.log("------------")
+    console.log(upgradedElem)
     setList(upgradedElem)
     setFilterList(upgradedElem)
 

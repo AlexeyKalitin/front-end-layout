@@ -41,16 +41,9 @@ function TodoElement(props) {
           if (ev.keyCode === 13) {
             console.log(ev.target.value);
             changeTask(todo.key,ev.target.value)
-           
           }
         }}
-        onKeyDown={(ev) => {
-          if (ev.keyCode === 27) {
-            setNewValue("")
-            setValue(newValue)
-          }
-          
-        }}
+        
         className="todo-list__text"
       ></input>
       <p className="todo-list__date">{todo.date}</p>
