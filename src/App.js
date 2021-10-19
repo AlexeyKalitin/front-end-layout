@@ -9,6 +9,9 @@ function App() {
   const [value, setValue] = useState("");
   const [filterList, setFilterList] = useState([]);
   const [sortStatus, setSortStatus] = useState("up");
+  const [currentPage, setCurrentPage] = useState(0);
+  const [todosPerPage] = useState(5);
+
   console.log("render")
 
   function listFilter(status) {
@@ -17,24 +20,8 @@ function App() {
     } else {
       setFilterList(list.filter(item => item.isDone === status));
     }
+    setCurrentPage(0)
   }
-
-  useEffect(() => {
-    if (sortStatus === "up") {
-      const newArr2 = []
-      const newArr = filterList.sort((a, b) => a.key - b.key);
-      Object.assign(newArr2, newArr)
-      setFilterList(newArr2)
-    }
-    if (sortStatus === "down") {
-      const newArr2 = []
-      const newArr = filterList.sort((a, b) => b.key - a.key);
-      Object.assign(newArr2, newArr)
-      setFilterList(newArr2)
-    }
-  }, [sortStatus])
-
-
 
   const removeItem = id => {
     setList(list.filter(x => (x.key !== id)))
@@ -49,11 +36,21 @@ function App() {
       return item
     })
     setList(upgradedElem)
-    console.log([...upgradedElem]);
+    setFilterList(upgradedElem)
+  }
+
+
+  const handlerChangeTask = (elem,newText) => {
+    const upgradedElem = list.map(item => {
+      if (item.key === elem) {
+        return Object.assign({}, item, { text: newText })
+      }
+      return item
+    })
+    setList(upgradedElem)
     setFilterList(upgradedElem)
 
   }
-
 
   const handlerNewElemSetter = newElem => {
     setList([...list, newElem])
@@ -83,7 +80,10 @@ function App() {
         <div className="todo-main">
         </div>
       </div>
-      <TodoList todos={filterList} removeItem={(id) => removeItem(id)} changeCondition={(elem) => changeCondition(elem)}></TodoList>
+      <TodoList todos={filterList.slice(currentPage * todosPerPage, currentPage * todosPerPage + todosPerPage)} removeItem={(id) => removeItem(id)} changeCondition={(elem)  => changeCondition(elem)} changeTask={(elem, newText)=>handlerChangeTask(elem,newText)} ></TodoList>
+      {list.length>0 && (
+        <Paginate setCurrentPage={(value) => setCurrentPage(value)} valueCurrentPage={currentPage} countTodoElem={filterList.length} countElemPerPage={todosPerPage}></Paginate>
+      )} 
     </div>
   );
 

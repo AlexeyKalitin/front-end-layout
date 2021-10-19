@@ -1,8 +1,10 @@
+import { useEffect, useState } from "react";
 import "../style-modules/style.css";
 import TodosElement from "./TodoElement";
 
 function TodoList(props) {
-  const { todos, removeItem, changeCondition } = props;
+  const { todos, removeItem, changeCondition,changeTask } = props;
+  
 
   if (todos.length === 0) {
     return <h1 style={{ marginTop: "2vw" }}>Nothing...</h1>;
@@ -15,6 +17,7 @@ function TodoList(props) {
               todo={todo}
               removeItem={removeItem}
               changeCondition={changeCondition}
+              changeTask={changeTask}
             ></TodosElement>
           );
         })}

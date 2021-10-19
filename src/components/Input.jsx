@@ -1,5 +1,5 @@
 import "../style-modules/style.css";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 function Input(props) {
   const [value, setValue] = useState("");
