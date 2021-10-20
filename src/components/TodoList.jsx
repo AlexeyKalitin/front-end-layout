@@ -8,9 +8,10 @@ function TodoList( { todos, removeItem, changeCondition, changeTask }) {
   } else {
     return (
       <ul className="todo-list">
-        {todos.map((todo) => {
+        {todos.map((todo, index) => {
           return (
             <TodosElement
+              key={index}
               todo={todo}
               removeItem={removeItem}
               changeCondition={changeCondition}

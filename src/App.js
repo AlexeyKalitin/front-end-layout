@@ -10,7 +10,7 @@ function App() {
   const [filterTodos, setFilterTodos] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [todosPerPage] = useState(5);
-
+  console.log("render")
   function todosFilter(status) {
     if (status === "all") {
       setFilterTodos(todos)
@@ -23,9 +23,8 @@ function App() {
   const removeItem = id => {
     setTodos(todos.filter(x => (x.key !== id)))
     setFilterTodos(filterTodos.filter(x => (x.key !== id)))
-    if(((filterTodos.length-2) / todosPerPage) < currentPage && currentPage > 0 ){
-      setCurrentPage(currentPage-1)
-      console.log(currentPage-1)
+    if (((filterTodos.length - 2) / todosPerPage) < currentPage && currentPage > 0) {
+      setCurrentPage(currentPage - 1)
     }
   }
 

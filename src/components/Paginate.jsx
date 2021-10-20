@@ -13,7 +13,7 @@ function Paginate({
   }
 
   return (
-    <div className="paginate">
+    <div  className="paginate">
       <div className="paginate__button">
         <button
           className="paginate__button"
@@ -26,7 +26,7 @@ function Paginate({
       </div>
       {arr.slice(0, 13).map((ind) => {
         return (
-          <div className="paginate__button">
+          <div key={ind} className="paginate__button">
             {ind - 1 === valueCurrentPage && (
               <button
                 className="paginate__button paginate__button-active"
