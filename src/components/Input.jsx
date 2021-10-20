@@ -1,7 +1,7 @@
 import "../style-modules/style.css";
 import React, { useState } from "react";
 
-function Input(props) {
+function Input({newElemSetter}) {
   const [value, setValue] = useState("");
   const currentDate = new Date();
 
@@ -13,7 +13,7 @@ function Input(props) {
     <div className="input">
       <input
         onKeyDown={(ev) => {
-          if (ev.keyCode == 13) {
+          if (ev.key === "Enter") {
             const newElem = {
               key: currentDate.getTime(),
               text: value,
@@ -23,7 +23,7 @@ function Input(props) {
               isDone: false,
             };
             setValue("");
-            props.newElemSetter(newElem);
+            newElemSetter(newElem);
           }
         }}
         value={value}

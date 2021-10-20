@@ -1,94 +1,107 @@
 import "./style-modules/style.css"
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Input from "./components/Input"
 import Filter from "./components/Filter"
 import Paginate from "./components/Paginate"
 import TodoList from "./components/TodoList";
 function App() {
-  const [list, setList] = useState([]);
-  const [value, setValue] = useState("");
-  const [filterList, setFilterList] = useState([]);
-  const [sortStatus, setSortStatus] = useState("up");
+
+  const [todos, setTodos] = useState([]);
+  const [filterTodos, setFilterTodos] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [todosPerPage] = useState(5);
 
-  console.log("render")
-
-  function listFilter(status) {
+  function todosFilter(status) {
     if (status === "all") {
-      setFilterList(list)
+      setFilterTodos(todos)
     } else {
-      setFilterList(list.filter(item => item.isDone === status));
+      setFilterTodos(todos.filter(item => item.isDone === status));
     }
     setCurrentPage(0)
   }
 
   const removeItem = id => {
-    setList(list.filter(x => (x.key !== id)))
-    setFilterList(list.filter(x => (x.key !== id)))
+    setTodos(todos.filter(x => (x.key !== id)))
+    setFilterTodos(filterTodos.filter(x => (x.key !== id)))
+    if(((filterTodos.length-2) / todosPerPage) < currentPage && currentPage > 0 ){
+      setCurrentPage(currentPage-1)
+      console.log(currentPage-1)
+    }
   }
 
-  const changeCondition = elem => {
-    const upgradedElem = list.map(item => {
-      if (item.key === elem) {
+  const changeCondition = key => {
+    const upgradedElem = todos.map(item => {
+      if (item.key === key) {
         return Object.assign({}, item, { isDone: true })
       }
       return item
     })
-    setList(upgradedElem)
-    setFilterList(upgradedElem)
+    const upgradedFilterElem = filterTodos.map(item => {
+      if (item.key === key) {
+        return Object.assign({}, item, { isDone: true })
+      }
+      return item
+    })
+    setTodos(upgradedElem)
+    setFilterTodos(upgradedFilterElem)
   }
 
-
-  const handlerChangeTask = (elem,newText) => {
-    const upgradedElem = list.map(item => {
+  const handlerChangeTask = (elem, newText) => {
+    const upgradedElem = todos.map(item => {
       if (item.key === elem) {
         return Object.assign({}, item, { text: newText })
       }
       return item
     })
-    console.log("------------")
-    console.log(upgradedElem)
-    setList(upgradedElem)
-    setFilterList(upgradedElem)
-
+    setTodos(upgradedElem)
+    setFilterTodos(upgradedElem)
   }
 
   const handlerNewElemSetter = newElem => {
-    setList([...list, newElem])
-    setFilterList([...list, newElem])
+    setTodos([...todos, newElem])
+    setFilterTodos([...todos, newElem])
   }
 
   const handlerSetSortStatus = sortStatus => {
     const newMass = []
-
-    let sortedTodos = filterList.sort((a, b) => a.key - b.key)
+    let sortedTodos = filterTodos.sort((a, b) => a.key - b.key)
     if (sortStatus === "down") {
-      sortedTodos = filterList.sort((a, b) => b.key - a.key)
+      sortedTodos = filterTodos.sort((a, b) => b.key - a.key)
     }
 
     Object.assign(newMass, sortedTodos)
-    setFilterList(newMass);
+    setFilterTodos(newMass);
   }
 
   return (
     <div className="conteiner">
       <div>
+
         <div className="todo">
           <h1>ToDo</h1>
+
           <Input newElemSetter={newElem => handlerNewElemSetter(newElem)}></Input>
         </div>
-        <Filter listFilter={(status) => listFilter(status)} setSortStatus={(sortStatus) => handlerSetSortStatus(sortStatus)} />
+        <Filter todosFilter={(status) => todosFilter(status)} setSortStatus={(sortStatus) => handlerSetSortStatus(sortStatus)} />
         <div className="todo-main">
         </div>
       </div>
-      <TodoList todos={filterList.slice(currentPage * todosPerPage, currentPage * todosPerPage + todosPerPage)} removeItem={(id) => removeItem(id)} changeCondition={(elem)  => changeCondition(elem)} changeTask={(elem, newText)=>handlerChangeTask(elem,newText)} ></TodoList>
-      {list.length>0 && (
-        <Paginate setCurrentPage={(value) => setCurrentPage(value)} valueCurrentPage={currentPage} countTodoElem={filterList.length} countElemPerPage={todosPerPage}></Paginate>
-      )} 
+      <TodoList
+        todos={filterTodos.slice(currentPage * todosPerPage, currentPage * todosPerPage + todosPerPage)}
+        removeItem={(id) => removeItem(id)}
+        changeCondition={(key) => changeCondition(key)}
+        changeTask={(elem, newText) => handlerChangeTask(elem, newText)}>
+      </TodoList>
+      {todos.length > 0 && (
+        <Paginate
+          setCurrentPage={(value) => setCurrentPage(value)}
+          valueCurrentPage={currentPage}
+          countTodoElem={filterTodos.length}
+          countElemPerPage={todosPerPage}>
+        </Paginate>
+      )}
     </div>
   );
-
 }
 
 export default App;

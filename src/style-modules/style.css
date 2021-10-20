@@ -1,303 +1,283 @@
-@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap");
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
-    font-family: 'Architects Daughter', cursive;
-    
+  box-sizing: border-box;
+  font-family: "Architects Daughter", cursive;
 }
 
 body {
-    margin: 0;
-    font-size: 1.5rem;
-    font-weight: 400;
-    line-height: 1.5;
-    background-color: #fff;
-    background-color: #fff;
-    -webkit-text-size-adjust: 100%;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.5;
+  background-color: #fff;
+  background-color: #fff;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .conteiner {
-    min-width: 50vw;
-    min-height: 98vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    
-    border: 2px solid black;
-    padding: 3rem;
-    margin-top: 1vh;
-    border-radius: 3rem;
+  min-width: 50vw;
+  min-height: 98vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  border: 2px solid black;
+  padding: 3rem;
+  margin-top: 1vh;
+  border-radius: 3rem;
 }
 
 .todo__text {
-    width: 40vw;
-    height: 3rem;
-    border: 2px solid black;
-    border-radius: 0.5rem;
-    font-size: 2rem;
+  width: 40vw;
+  height: 3rem;
+  border: 2px solid black;
+  border-radius: 0.5rem;
+  font-size: 2rem;
 }
 
-.changer__button {
-    width: 4vw;
-    height: 6vh;
-    /* Safari */
-    transition-duration: 0.4s;
-    background-color: white;
-    cursor: pointer;
-    border-radius: 1rem;
-    font-size: 1.2rem;
+.paginate__button {
+    min-width: 2vw;
+    min-height: 3vh;
+  max-width: 4vw;
+  max-height: 6vh;
+  /* Safari */
+  transition-duration: 0.4s;
+  background-color: white;
+  cursor: pointer;
+  border-radius: 1rem;
+  font-size: 1.2rem;
+
 }
 
-.changer__button:hover {
+.paginate__button-active { 
     background-color: black;
-    color: white
+    color: white;
+  }
+
+.paginate__button:hover {
+  background-color: black;
+  color: white;
 }
 
 .todo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .filter {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 1vw;
-    width: 40vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1vw;
+  width: 40vw;
 }
 
 .filter__button-all {
-    background-color: white;
-    color: black;
-    border: 2px solid black;
-    transition-duration: 0.4s;
-    cursor: pointer;
-    border-radius: 1rem;
-    font-size: 1.5rem;
-    padding: 0.5rem;
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 1rem;
+  font-size: 1.5rem;
+  padding: 0.5rem;
 }
 
 .filter__button-done {
-    background-color: white;
-    color: black;
-    border: 2px solid black;
-    transition-duration: 0.4s;
-    font-size: 0.9rem;
-    margin-left: 2px;
-    margin-right: 2px;
-    cursor: pointer;
-    border-radius: 1rem;
-    font-size: 1.5rem;
-    padding: 0.5rem;
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+  transition-duration: 0.4s;
+  font-size: 0.9rem;
+  margin-left: 2px;
+  margin-right: 2px;
+  cursor: pointer;
+  border-radius: 1rem;
+  font-size: 1.5rem;
+  padding: 0.5rem;
 }
-.filter__button-done:active{
-    background-color: black;
+.filter__button-done:active {
+  background-color: black;
 }
 
 .filter__button-undone {
-    background-color: white;
-    color: black;
-    border: 2px solid black;
-    transition-duration: 0.4s;
-    font-size: 0.9rem;
-    cursor: pointer;
-    border-radius: 1rem;
-    font-size: 1.5rem;
-    padding: 0.5rem;
-
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+  transition-duration: 0.4s;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-radius: 1rem;
+  font-size: 1.5rem;
+  padding: 0.5rem;
 }
 
 .filter__button-all:hover {
-    background-color: black;
-    color: white;
+  background-color: black;
+  color: white;
 }
 
 .filter__button-done:hover {
-    background-color: black;
-    color: white;
-    
+  background-color: black;
+  color: white;
 }
 
 .filter__button-undone:hover {
-    background-color: black;
-    color: white;
+  background-color: black;
+  color: white;
 }
 
 .filter__arrow-down {
-    background-color: white;
-    border: white;
-    transition-duration: 0.4s;
-    cursor: pointer;
-    border-radius: 1rem;
+  background-color: white;
+  border: white;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 1rem;
 }
 
 .filter__arrow-up {
-    background-color: white;
-    border: white;
-    transition-duration: 0.4s;
-    cursor: pointer;
-    border-radius: 0.7rem;
-
+  background-color: white;
+  border: white;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 0.7rem;
 }
 
 .filter__arrow-up:hover {
-    filter: invert(100%);
+  filter: invert(100%);
 }
 
 .filter__arrow-down:hover {
-    filter: invert(100%);
+  filter: invert(100%);
 }
 
 .todo-main {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .todo-list {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 42vh;
-    min-width: 35vw;
+  display: flex;
+  align-items: flex-start;
+  justify-content:flex-start;
+  min-height: 50vh;
+  min-width: 35vw;
 }
 
-.changer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    min-width: 30vw;
-}
 
 .filter-sort {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-left: 4.6rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-left: 4.6rem;
 }
 
 ul {
-    flex-direction: column;
-    padding-inline-start: 0px
+  flex-direction: column;
+  padding-inline-start: 0px;
 }
 
 li {
-    display: flex;
-    justify-content: space-between;
-    border: 2px solid #212529;
-    margin-top: 10px;
-    width: 40vw;
-    height: 8vh;
-    border-radius: 1rem;
+  display: flex;
+  justify-content: space-between;
+  border: 2px solid #212529;
+  margin-top: 10px;
+  width: 40vw;
+  height: 8vh;
+  border-radius: 1rem;
 }
 
 .todo-list__text {
-    min-width: 6rem;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    border:none;
-    font-size: 2rem;
-    max-width: 17vw;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ font-size: 1.6rem;
+ min-width: 13vw;
+}
+
+.todo-list__input{
+    font-size: 1.6rem;
+    max-width: 13vw;
 }
 
 [data-tooltip] {
-    position: relative;
-    background: rgb(2, 2, 2);
+  position: relative;
+  background: rgb(2, 2, 2);
 }
 
 [data-tooltip]::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    width: 3rem;
-    left: 0;
-    top: 0;
-    background: rgb(2, 2, 2);
-    color: #fff;
-    padding: 0.5em;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-    pointer-events: none;
-    opacity: 0;
-    transition: 1s;
+  content: attr(data-tooltip);
+  position: absolute;
+  width: 3rem;
+  left: 0;
+  top: 0;
+  background: rgb(2, 2, 2);
+  color: #fff;
+  padding: 0.5em;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  opacity: 0;
+  transition: 1s;
 }
 
 [data-tooltip]:hover::after {
-    opacity: 1;
-    top: 2em;
+  opacity: 1;
+  top: 2em;
 }
 
-.input{
-    border-radius: 1rem;
-  
+.input {
+  border-radius: 1rem;
 }
 
 .todo-list__button {
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.4s;
-    background-color: white;
-    border: none;
-    cursor: pointer;
-    max-width: 3rem;
-    margin-right: 2rem;
-    border-top-left-radius: 0.85rem;
-    border-bottom-left-radius: 0.85rem;
-    
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  max-width: 3rem;
+  margin-right: 2rem;
+  border-top-left-radius: 0.85rem;
+  border-bottom-left-radius: 0.85rem;
 }
 
 .todo-list__button:hover {
-    filter: invert(100%);
+  filter: invert(100%);
 }
 
 .todo-list__trashbin {
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.4s;
-    cursor: pointer;
-    background-color: white;
-    border: none;
-    border-bottom-right-radius: 0.85rem;
-    border-top-right-radius: 0.85rem;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  background-color: white;
+  border: none;
+  border-bottom-right-radius: 0.85rem;
+  border-top-right-radius: 0.85rem;
 }
-.todo-list__date{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.todo-list__date {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .todo-list__trashbin:hover {
-    background-color: white;
-    filter: invert(100%);
+  background-color: white;
+  filter: invert(100%);
 }
 
-
-  .pagination-button{
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.4s;
-    background-color: white;
-    border: 2px solid black;
-    padding: 5px;
-    cursor: pointer;
-    
-    font-size: 1rem;
-    flex-direction: row;
-    max-width: 6vw;
-    justify-content: center;
+.paginate {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-  }
-  .pagination-button:hover{
-    filter: invert(100%);
-  }
-  
-  .paginate{
-      width: 40vw;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-  }
+    width: 40vw;
+}

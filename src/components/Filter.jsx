@@ -1,25 +1,25 @@
 import "../style-modules/style.css";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import arrowup from "../arrowup.svg";
 import arrowdown from "../arrowdown.svg";
-function Filter(props) {
+function Filter({todosFilter,setSortStatus}) {
   return (
     <span className="filter">
       <span className="filter-buttons">
         <button
-          onClick={() => props.listFilter("all")}
+          onClick={() => todosFilter("all")}
           className="filter__button-all"
         >
           all
         </button>
         <button
-          onClick={() => props.listFilter(true)}
+          onClick={() => todosFilter(true)}
           className="filter__button-done"
         >
           done
         </button>
         <button
-          onClick={() => props.listFilter(false)}
+          onClick={() => todosFilter(false)}
           className="filter__button-undone"
         >
           undone
@@ -28,13 +28,13 @@ function Filter(props) {
       <span className="filter-sort">
         <p style={{ marginRight: 11 }}>Sort by Date</p>
         <button
-          onClick={() => props.setSortStatus("down")}
+          onClick={() => setSortStatus("down")}
           className="filter__arrow-down"
         >
           <img alt="arrowdown" src={arrowdown} />
         </button>
         <button
-          onClick={() => props.setSortStatus("up")}
+          onClick={() =>setSortStatus("up")}
           className="filter__arrow-up"
         >
           <img alt="arrowup" src={arrowup} />

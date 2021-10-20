@@ -4,48 +4,61 @@ import trashbin from "../trash.svg";
 import done from "../icon.svg";
 import { useState } from "react";
 
-function TodoElement(props) {
-  const { todo, removeItem, changeCondition, changeTask} = props;
-  const [value,setValue] = useState("");
-  const [newValue,setNewValue] = useState("");
-  const [focusStatus, setFocusStatus] = useState(true);
+function TodoElement({ todo, removeItem, changeCondition, changeTask }) {
+ 
+  const [value, setValue] = useState("");
+  const [isEditable, setIsEditable] = useState(false);
 
-  
-  const handleChange = (event) => {
-    setValue(event.target.value);
+  const handleChange = (e) => {
+    setValue(e.target.value);
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      changeTask(todo.key, e.target.value);
+      setIsEditable(false);
+      setValue("");
+    }
+    if (e.key === "Escape") {
+      setIsEditable(false);
+      setValue("");
+    }
+  }
+  console.log(todo);
   return (
     <li key={todo.key}>
-      {todo.isDone === false && (
-        <button
-          onClick={() => changeCondition(todo.key)}
-          data-tooltip="Undone"
-          className="todo-list__button"
-        >
+      <button
+        onClick={() => changeCondition(todo.key)}
+        data-tooltip="Undone"
+        className="todo-list__button"
+      >
+        {todo.isDone === false && (
           <img alt="undone" src={undone} className="todo-list__picture" />
-        </button>
-      )}
-
-      {todo.isDone === true && (
-        <button data-tooltip="Done" className="todo-list__button">
+        )}
+        {todo.isDone === true && (
           <img alt="done" src={done} className="todo-list__picture" />
-        </button>
-      )}
+        )}
+      </button>
 
-      <input
-        onChange={handleChange}
-        defaultValue={todo.text+newValue}
-        
-        onKeyDown={(ev) => {
-          if (ev.keyCode === 13) {
-            console.log(ev.target.value);
-            changeTask(todo.key,ev.target.value)
-          }
-        }}
-        
-        className="todo-list__text"
-      ></input>
+      <p onClick={() => setIsEditable(true)} className="todo-list__text">
+        {isEditable && (
+          <input
+            onBlur={() => {
+              setIsEditable(false);
+              setValue("");
+            }}
+            onChange={handleChange}
+            autoFocus
+            maxLength="16"
+            value={value}
+            defaultValue={todo.text}
+            onKeyDown={handleKeyDown}
+            className="todo-list__input"
+          ></input>
+        )}
+        {!isEditable && <p>{todo.text}</p>}
+      </p>
+
       <p className="todo-list__date">{todo.date}</p>
       <button
         onClick={() => removeItem(todo.key)}

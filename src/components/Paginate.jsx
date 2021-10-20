@@ -1,5 +1,5 @@
 import "../style-modules/style.css";
-import React, { useState } from "react";
+import React from "react";
 
 function Paginate({
   setCurrentPage,
@@ -7,44 +7,61 @@ function Paginate({
   countTodoElem,
   countElemPerPage,
 }) {
-    const arr=[];
-  for (let i = 1; i < (countTodoElem / countElemPerPage)+1; i++) {
-    arr.push(i)
+  const arr = [];
+  for (let i = 1; i < countTodoElem / countElemPerPage + 1; i++) {
+    arr.push(i);
   }
 
   return (
     <div className="paginate">
-      <button
-        className="changer__button"
-        onClick={() => {
-          if (valueCurrentPage > 0) setCurrentPage(valueCurrentPage - 1);
-        }}
-      >
-        Prev
-      </button>
+      <div className="paginate__button">
+        <button
+          className="paginate__button"
+          onClick={() => {
+            if (valueCurrentPage > 0) setCurrentPage(valueCurrentPage - 1);
+          }}
+        >
+          Prev
+        </button>
+      </div>
+      {arr.slice(0, 13).map((ind) => {
+        return (
+          <div className="paginate__button">
+            {ind - 1 === valueCurrentPage && (
+              <button
+                className="paginate__button paginate__button-active"
+                onClick={() => {
+                  setCurrentPage(ind - 1);
+                }}
+              >
+                {ind}
+              </button>
+            )}
 
-      {arr.slice(0,13).map((ind) => {
-          return (
-            <button
-            className="changer__button"
-            onClick={() => {
-              setCurrentPage(ind-1);
-            }}
-          >
-            {ind}
-          </button>
-          );
-        })}
-
-      <button
-        className="changer__button"
-        onClick={() => {
-          if (valueCurrentPage < countTodoElem / countElemPerPage - 1)
-            setCurrentPage(valueCurrentPage + 1);
-        }}
-      >
-        Next
-      </button>
+            {ind - 1 !== valueCurrentPage && (
+              <button
+                className="paginate__button"
+                onClick={() => {
+                  setCurrentPage(ind - 1);
+                }}
+              >
+                {ind}
+              </button>
+            )}
+          </div>
+        );
+      })}
+      <div className="paginate__button">
+        <button
+          className="paginate__button"
+          onClick={() => {
+            if (valueCurrentPage < countTodoElem / countElemPerPage - 1)
+              setCurrentPage(valueCurrentPage + 1);
+          }}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 }
