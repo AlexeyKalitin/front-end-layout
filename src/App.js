@@ -10,7 +10,7 @@ function App() {
   const [filterTodos, setFilterTodos] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [todosPerPage] = useState(5);
-  console.log("render")
+
   function todosFilter(status) {
     if (status === "all") {
       setFilterTodos(todos)

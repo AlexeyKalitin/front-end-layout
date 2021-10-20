@@ -12,8 +12,13 @@ function Paginate({
     arr.push(i);
   }
 
+  const clickHandler = () => {
+    if (valueCurrentPage < countTodoElem / countElemPerPage - 1)
+      setCurrentPage(valueCurrentPage + 1);
+  }
+
   return (
-    <div  className="paginate">
+    <div className="paginate">
       <div className="paginate__button">
         <button
           className="paginate__button"
@@ -24,7 +29,8 @@ function Paginate({
           Prev
         </button>
       </div>
-      {arr.slice(0, 13).map((ind) => {
+      {arr.map((ind) => {
+        if (arr.length>1){
         return (
           <div key={ind} className="paginate__button">
             {ind - 1 === valueCurrentPage && (
@@ -49,15 +55,12 @@ function Paginate({
               </button>
             )}
           </div>
-        );
+        );}
       })}
       <div className="paginate__button">
         <button
           className="paginate__button"
-          onClick={() => {
-            if (valueCurrentPage < countTodoElem / countElemPerPage - 1)
-              setCurrentPage(valueCurrentPage + 1);
-          }}
+          onClick={() => clickHandler}
         >
           Next
         </button>
