@@ -1,4 +1,4 @@
-import "../style-modules/style.css";
+import "../style-modules/TodoList.module.css";
 import TodosElement from "./TodoElement";
 
 function TodoList( { todos, removeItem, changeCondition, changeTask }) {

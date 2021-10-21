@@ -26,7 +26,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  
   border: 2px solid black;
   padding: 2rem;
   margin-top: 1vh;
@@ -104,6 +103,7 @@ body {
   border-radius: 1rem;
   font-size: 1.5rem;
   padding: 0.5rem;
+  margin-left: 2px;
 }
 
 .filter__button-active{
@@ -218,30 +218,6 @@ li {
   background-color: rgb(194, 101, 101);
  }
 
-[data-tooltip] {
-  position: relative;
-  background: rgb(2, 2, 2);
-}
-
-[data-tooltip]::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  width: 3rem;
-  left: 0;
-  top: 0;
-  background: rgb(2, 2, 2);
-  color: #fff;
-  padding: 0.5em;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  pointer-events: none;
-  opacity: 0;
-  transition: 1s;
-}
-
-[data-tooltip]:hover::after {
-  opacity: 1;
-  top: 2em;
-}
 
 .input {
   border-radius: 1rem;

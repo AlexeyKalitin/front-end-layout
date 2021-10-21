@@ -1,4 +1,4 @@
-import "../style-modules/style.css";
+import "../style-modules/filter.module.css";
 import React, { useState } from "react";
 import arrowup from "../arrowup.svg";
 import arrowdown from "../arrowdown.svg";
@@ -47,7 +47,7 @@ function Filter({ todosFilter, setSortStatus }) {
   );
 
   return (
-    
+
     <span className="filter">
       <span className="filter-buttons">
         <button

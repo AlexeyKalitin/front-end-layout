@@ -1,4 +1,4 @@
-import "../style-modules/style.css";
+import "../style-modules/Paginate.module.css";
 import React from "react";
 
 function Paginate({
@@ -15,15 +15,15 @@ function Paginate({
     arr.push(i);
   }
   filterArr = arr.slice(0);
-  
+
   if (pageCount > countMaxPaginateButtons) {
     filterArr = arr
       .slice(0, 2)
-      .concat(arr.slice(valueCurrentPage-1, valueCurrentPage + 2))
-      .concat(arr.slice(-3,-1))
-      .concat(arr[arr.length-1])
-      .sort((a,b) => a-b)
-      filterArr=[...new Set(filterArr)]
+      .concat(arr.slice(valueCurrentPage - 1, valueCurrentPage + 2))
+      .concat(arr.slice(-3, -1))
+      .concat(arr[arr.length - 1])
+      .sort((a, b) => a - b);
+    filterArr = [...new Set(filterArr)];
   }
 
   const clickHandler = () => {
@@ -60,7 +60,7 @@ function Paginate({
               </button>
             </div>
           );
-        }else return <div key={ind}></div>
+        } else return <div key={ind}></div>;
       })}
 
       <div className="paginate__button">

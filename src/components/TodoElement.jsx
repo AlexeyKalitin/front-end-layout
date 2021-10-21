@@ -1,4 +1,4 @@
-import "../style-modules/style.css";
+import "../style-modules/TodoElement.module.css";
 import undone from "../undone.svg";
 import trashbin from "../trash.svg";
 import done from "../icon.svg";

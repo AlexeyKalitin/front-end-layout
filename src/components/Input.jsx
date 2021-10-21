@@ -1,4 +1,4 @@
-import "../style-modules/style.css";
+import "../style-modules/Input.module.css";
 import React, { useState } from "react";
 
 function Input({ newElemSetter }) {
