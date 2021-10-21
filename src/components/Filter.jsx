@@ -4,11 +4,6 @@ import arrowup from "../arrowup.svg";
 import arrowdown from "../arrowdown.svg";
 function Filter({ todosFilter, setSortStatus }) {
   const [activeFilterSort, setActiveFilterSort] = useState("all");
-  const [activeFilterCategory, setActiveFilterCategory] = useState("up");
-
-  const handlerFilterCategory = (filterName) => {
-    setActiveFilterCategory(filterName);
-  };
 
   const handlerFilterSort = (filterChoose) => {
     setActiveFilterSort(filterChoose);
@@ -18,13 +13,8 @@ function Filter({ todosFilter, setSortStatus }) {
     <button
       onClick={() => {
         setSortStatus("down");
-        handlerFilterCategory("down");
       }}
-      className={
-        activeFilterCategory === "down"
-          ? "filter__arrow-active"
-          : "filter__arrow-down"
-      }
+      className={"filter__arrow-down"}
     >
       <img alt="arrowdown" src={arrowdown} />
     </button>
@@ -34,20 +24,14 @@ function Filter({ todosFilter, setSortStatus }) {
     <button
       onClick={() => {
         setSortStatus("up");
-        handlerFilterCategory("up");
       }}
-      className={
-        activeFilterCategory === "up"
-          ? "filter__arrow-active"
-          : "filter__arrow-up"
-      }
+      className={"filter__arrow-up"}
     >
       <img alt="arrowup" src={arrowup} />
     </button>
   );
 
   return (
-
     <span className="filter">
       <span className="filter-buttons">
         <button
@@ -76,7 +60,7 @@ function Filter({ todosFilter, setSortStatus }) {
         >
           done
         </button>
-        
+
         <button
           onClick={() => {
             todosFilter(false);
@@ -90,7 +74,6 @@ function Filter({ todosFilter, setSortStatus }) {
         >
           undone
         </button>
-        
       </span>
       <span className="filter-sort">
         <p className="sortBy-text">Sort by Date</p>

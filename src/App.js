@@ -58,7 +58,7 @@ function App() {
 
   const handlerNewElemSetter = newElem => {
     setTodos([...todos, newElem])
-    setFilterTodos([...todos, newElem])
+    setFilterTodos([...filterTodos, newElem])
   }
 
   const handlerSetSortStatus = sortStatus => {
