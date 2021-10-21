@@ -29,20 +29,20 @@ function App() {
   }
 
   const changeCondition = key => {
-    const upgradedElem = todos.map(item => {
-      if (item.key === key) {
-        return Object.assign({}, item, { isDone: true })
-      }
-      return item
-    })
-    const upgradedFilterElem = filterTodos.map(item => {
+    let upgradedElem = todos.map(item => {
       if (item.key === key) {
         return Object.assign({}, item, { isDone: true })
       }
       return item
     })
     setTodos(upgradedElem)
-    setFilterTodos(upgradedFilterElem)
+    upgradedElem = filterTodos.map(item => {
+      if (item.key === key) {
+        return Object.assign({}, item, { isDone: true })
+      }
+      return item
+    })
+    setFilterTodos(upgradedElem)
   }
 
   const handlerChangeTask = (elem, newText) => {
@@ -67,7 +67,6 @@ function App() {
     if (sortStatus === "down") {
       sortedTodos = filterTodos.sort((a, b) => b.key - a.key)
     }
-
     Object.assign(newMass, sortedTodos)
     setFilterTodos(newMass);
   }

@@ -59,7 +59,7 @@ function Paginate({
               </button>
             </div>
           );
-        }
+        }else return <div key={ind}></div>
       })}
 
       <div className="paginate__button">
