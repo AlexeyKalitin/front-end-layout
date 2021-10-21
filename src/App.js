@@ -23,9 +23,6 @@ function App() {
   const removeItem = id => {
     setTodos(todos.filter(x => (x.key !== id)))
     setFilterTodos(filterTodos.filter(x => (x.key !== id)))
-    if (((filterTodos.length - 2) / todosPerPage) < currentPage && currentPage > 0) {
-      setCurrentPage(currentPage - 1)
-    }
   }
 
   const changeCondition = key => {
