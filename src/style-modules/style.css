@@ -26,6 +26,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  
   border: 2px solid black;
   padding: 2rem;
   margin-top: 1vh;
@@ -129,6 +130,20 @@ body {
   border-radius: 1rem;
 }
 
+.filter__arrow-active {
+  background-color: white;
+  color:white;
+  filter: invert(100%);
+  border: white;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 1rem;
+}
+
+
+.sortBy-text{
+  margin-right: 1rem;
+}
 .filter__arrow-up {
   background-color: white;
   border: white;
@@ -156,6 +171,7 @@ body {
   align-items: flex-start;
   justify-content:flex-start;
   max-height: 50vh;
+  min-height: 50vh;
   min-width: 35vw;
 }
 

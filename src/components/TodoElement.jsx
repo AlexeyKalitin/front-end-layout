@@ -5,11 +5,10 @@ import done from "../icon.svg";
 import { useState } from "react";
 
 function TodoElement({ todo, removeItem, changeCondition, changeTask }) {
-
   const [isEditable, setIsEditable] = useState(false);
 
-  const handleKeyDown = e => {
-    e.target.className="todo-list__input"
+  const handleKeyDown = (e) => {
+    e.target.className = "todo-list__input";
     if (e.target.value[0] !== " " && e.target.value !== "") {
       if (e.key === "Enter") {
         changeTask(todo.key, e.target.value);
@@ -19,10 +18,9 @@ function TodoElement({ todo, removeItem, changeCondition, changeTask }) {
         setIsEditable(false);
       }
     } else {
-      e.target.className="todo-list__input-error";
+      e.target.className = "todo-list__input-error";
     }
-  }
-
+  };
 
   return (
     <li key={todo.key}>
@@ -31,16 +29,15 @@ function TodoElement({ todo, removeItem, changeCondition, changeTask }) {
         title="done"
         className="todo-list__button"
       >
-        {todo.isDone === false && (
-          <img alt="undone" src={undone} className="todo-list__picture" />
-        )}
-        {todo.isDone === true && (
-          <img alt="done" src={done} className="todo-list__picture" />
-        )}
+        <img
+          alt="undone"
+          src={todo.isDone === false ? undone : done}
+          className="todo-list__picture"
+        />
       </button>
 
       <span onClick={() => setIsEditable(true)} className="todo-list__text">
-        {isEditable && (
+        {isEditable ? (
           <input
             onBlur={() => {
               setIsEditable(false);
@@ -51,8 +48,9 @@ function TodoElement({ todo, removeItem, changeCondition, changeTask }) {
             onKeyDown={handleKeyDown}
             className="todo-list__input"
           ></input>
+        ) : (
+          <p>{todo.text}</p>
         )}
-        {!isEditable && <p>{todo.text}</p>}
       </span>
 
       <p className="todo-list__date">{todo.date}</p>

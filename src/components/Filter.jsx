@@ -1,72 +1,101 @@
 import "../style-modules/style.css";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import arrowup from "../arrowup.svg";
 import arrowdown from "../arrowdown.svg";
 function Filter({ todosFilter, setSortStatus }) {
-  const [activeFilter, setActiveFilter] = useState("all")
-  const handlerFilterSelection = filterName => {
-    setActiveFilter(filterName);
-  }
+  const [activeFilterSort, setActiveFilterSort] = useState("all");
+  const [activeFilterCategory, setActiveFilterCategory] = useState("up");
+
+  const handlerFilterCategory = (filterName) => {
+    setActiveFilterCategory(filterName);
+  };
+
+  const handlerFilterSort = (filterChoose) => {
+    setActiveFilterSort(filterChoose);
+  };
+
+  const ButtonArrowDown = (
+    <button
+      onClick={() => {
+        setSortStatus("down");
+        handlerFilterCategory("down");
+      }}
+      className={
+        activeFilterCategory === "down"
+          ? "filter__arrow-active"
+          : "filter__arrow-down"
+      }
+    >
+      <img alt="arrowdown" src={arrowdown} />
+    </button>
+  );
+
+  const ButtonArrowUp = (
+    <button
+      onClick={() => {
+        setSortStatus("up");
+        handlerFilterCategory("up");
+      }}
+      className={
+        activeFilterCategory === "up"
+          ? "filter__arrow-active"
+          : "filter__arrow-up"
+      }
+    >
+      <img alt="arrowup" src={arrowup} />
+    </button>
+  );
+
   return (
+    
     <span className="filter">
       <span className="filter-buttons">
-        {(activeFilter !== "all") ? <button
-          onClick={() => { todosFilter("all"); handlerFilterSelection("all") }}
-          className="filter__button"
+        <button
+          onClick={() => {
+            todosFilter("all");
+            handlerFilterSort("all");
+          }}
+          className={
+            activeFilterSort === "all"
+              ? "filter__button-active"
+              : "filter__button"
+          }
         >
           all
         </button>
-          :
-          <button
-            onClick={() => { todosFilter("all"); handlerFilterSelection("all") }}
-            className="filter__button-active"
-          >
-            all
-        </button>}
-
-        {(activeFilter !== "done") ? <button
-          onClick={() => { todosFilter(true); handlerFilterSelection("done") }}
-          className="filter__button"
+        <button
+          onClick={() => {
+            todosFilter(true);
+            handlerFilterSort("done");
+          }}
+          className={
+            activeFilterSort === "done"
+              ? "filter__button-active"
+              : "filter__button"
+          }
         >
           done
         </button>
-          :
-          <button
-          onClick={() => { todosFilter(true); handlerFilterSelection("done") }}
-          className="filter__button-active"
-        >
-          done
-        </button>}
-
-        {(activeFilter !== "undone") ?  <button
-          onClick={() => { todosFilter(false); handlerFilterSelection("undone") }}
-          className="filter__button"
+        
+        <button
+          onClick={() => {
+            todosFilter(false);
+            handlerFilterSort("undone");
+          }}
+          className={
+            activeFilterSort === "undone"
+              ? "filter__button-active"
+              : "filter__button"
+          }
         >
           undone
         </button>
-          :
-          <button
-          onClick={() => { todosFilter(false); handlerFilterSelection("undone") }}
-          className="filter__button-active"
-        >
-          undone
-        </button>}
-       
+        
       </span>
       <span className="filter-sort">
-        <p style={{ marginRight: 11 }}>Sort by Date</p>
-        <button
-          onClick={() => setSortStatus("down")}
-          className="filter__arrow-down"
-        >
-          <img alt="arrowdown" src={arrowdown} />
-        </button>
-        <button
-          onClick={() => setSortStatus("up")}
-          className="filter__arrow-up"
-        >
-          <img alt="arrowup" src={arrowup} />
-        </button>
+        <p className="sortBy-text">Sort by Date</p>
+        {ButtonArrowDown}
+        {ButtonArrowUp}
       </span>
     </span>
   );
