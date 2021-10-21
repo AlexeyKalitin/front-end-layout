@@ -20,7 +20,8 @@ function Paginate({
     filterArr = arr
       .slice(0, 2)
       .concat(arr.slice(valueCurrentPage-1, valueCurrentPage + 2))
-      .concat(arr.slice(-4,-1))
+      .concat(arr.slice(-3,-1))
+      .concat(arr[arr.length-1])
       .sort((a,b) => a-b)
       filterArr=[...new Set(filterArr)]
   }
