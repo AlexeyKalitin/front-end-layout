@@ -5,7 +5,7 @@ function FilterButton({
   FilterSort,
   activeFilterSort,
   value,
-  sortType
+  sortType,
 }) {
   return (
     <button
@@ -23,5 +23,4 @@ function FilterButton({
     </button>
   );
 }
-
 export default FilterButton;

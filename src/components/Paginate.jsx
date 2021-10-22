@@ -3,31 +3,28 @@ import React from "react";
 
 function Paginate({
   setCurrentPage,
-  valueCurrentPage,
+  currentPage,
   countTodoElem,
   countElemPerPage,
 }) {
   const arr = [];
   let filterArr = [];
   const pageCount = countTodoElem / countElemPerPage;
-  const countMaxPaginateButtons = 9;
+  const maxPaginateButtons = 9;
 
   for (let i = 1; i < pageCount + 1; i++) {
     arr.push(i);
   }
   filterArr = arr.slice(0);
 
-  if (
-    (countTodoElem - 1) / countElemPerPage < valueCurrentPage &&
-    valueCurrentPage > 0
-  ) {
-    setCurrentPage(valueCurrentPage - 1);
+  if ((countTodoElem - 1) / countElemPerPage < currentPage && currentPage > 0) {
+    setCurrentPage(currentPage - 1);
   }
 
-  if (pageCount > countMaxPaginateButtons) {
+  if (pageCount > maxPaginateButtons) {
     filterArr = arr
       .slice(0, 2)
-      .concat(arr.slice(valueCurrentPage - 1, valueCurrentPage + 2))
+      .concat(arr.slice(currentPage - 1, currentPage + 2))
       .concat(arr.slice(-3, -1))
       .concat(arr[arr.length - 1])
       .sort((a, b) => a - b);
@@ -35,7 +32,7 @@ function Paginate({
   }
 
   const clickHandler = () => {
-    if (pageCount - 1 > valueCurrentPage) setCurrentPage(valueCurrentPage + 1);
+    if (pageCount - 1 > currentPage) setCurrentPage(currentPage + 1);
   };
 
   return (
@@ -44,7 +41,7 @@ function Paginate({
         <button
           className="paginate__button"
           onClick={() => {
-            if (valueCurrentPage > 0) setCurrentPage(valueCurrentPage - 1);
+            if (currentPage > 0) setCurrentPage(currentPage - 1);
           }}
         >
           Prev
@@ -56,7 +53,7 @@ function Paginate({
             <div key={ind} className="paginate__button">
               <button
                 className={
-                  ind - 1 === valueCurrentPage
+                  ind - 1 === currentPage
                     ? "paginate__button paginate__button-active"
                     : "paginate__button"
                 }

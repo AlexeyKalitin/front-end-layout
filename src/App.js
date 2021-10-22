@@ -101,7 +101,7 @@ function App() {
       {todos.length > 0 && (
         <Paginate
           setCurrentPage={(value) => setCurrentPage(value)}
-          valueCurrentPage={currentPage}
+          currentPage={currentPage}
           countTodoElem={filterTodos.length}
           countElemPerPage={todosPerPage}
         ></Paginate>
