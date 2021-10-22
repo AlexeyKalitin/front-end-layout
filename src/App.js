@@ -1,8 +1,8 @@
-import "./style-modules/style.css"
-import React, { useState } from 'react';
-import Input from "./components/Input"
-import Filter from "./components/Filter"
-import Paginate from "./components/Paginate"
+import "./style-modules/style.css";
+import React, { useState } from "react";
+import Input from "./components/Input";
+import Filter from "./components/Filter";
+import Paginate from "./components/Paginate";
 import TodoList from "./components/TodoList";
 
 function App() {
@@ -13,75 +13,98 @@ function App() {
 
   function todosFilter(status) {
     if (status === "all") {
-      setFilterTodos(todos)
+      setFilterTodos(todos);
     } else {
-      setFilterTodos(todos.filter(item => item.isDone === status));
+      setFilterTodos(todos.filter((item) => item.isDone === status));
     }
-    setCurrentPage(0)
+    setCurrentPage(0);
   }
 
-  const handlerRemoveItem = key => {
-    setTodos(todos.filter(x => (x.key !== key)))
-    setFilterTodos(filterTodos.filter(x => (x.key !== key)))
-  }
+  const handlerRemoveItem = (key) => {
+    setTodos(todos.filter((x) => x.key !== key));
+    setFilterTodos(filterTodos.filter((x) => x.key !== key));
+  };
 
-  const handlerChangeCondition = key => {
-    let upgradedElem = todos.slice(0)
-    todos.forEach((elem, ind) => { if (elem.key === key) { upgradedElem[ind].isDone = true; } })
-    setTodos(upgradedElem)
+  const handlerChangeCondition = (key) => {
+    let upgradedElem = todos.slice(0);
+    todos.forEach((elem, ind) => {
+      if (elem.key === key) {
+        upgradedElem[ind].isDone = true;
+      }
+    });
+    setTodos(upgradedElem);
 
-    upgradedElem = filterTodos.slice(0)
-    filterTodos.forEach((elem, ind) => { if (elem.key === key) { upgradedElem[ind].isDone = true; } })
-    setFilterTodos(upgradedElem)
-  }
+    upgradedElem = filterTodos.slice(0);
+    filterTodos.forEach((elem, ind) => {
+      if (elem.key === key) {
+        upgradedElem[ind].isDone = true;
+      }
+    });
+    setFilterTodos(upgradedElem);
+  };
 
   const handlerChangeTask = (key, newText) => {
-    let upgradedElem = todos.slice(0)
-    todos.forEach((elem, ind) => { if (elem.key === key) { upgradedElem[ind].text = newText ; } })
-    setTodos(upgradedElem)
+    let upgradedElem = todos.slice(0);
+    todos.forEach((elem, ind) => {
+      if (elem.key === key) {
+        upgradedElem[ind].text = newText;
+      }
+    });
+    setTodos(upgradedElem);
 
-    upgradedElem = filterTodos.slice(0)
-    filterTodos.forEach((elem, ind) => { if (elem.key === key) { upgradedElem[ind].text =  newText ; } })
-    setFilterTodos(upgradedElem)
-  }
+    upgradedElem = filterTodos.slice(0);
+    filterTodos.forEach((elem, ind) => {
+      if (elem.key === key) {
+        upgradedElem[ind].text = newText;
+      }
+    });
+    setFilterTodos(upgradedElem);
+  };
 
-  const handlerNewElemSetter = newElem => {
-    setTodos([...todos, newElem])
-    setFilterTodos([...filterTodos, newElem])
-  }
+  const handlerNewElemSetter = (newElem) => {
+    setTodos([...todos, newElem]);
+    setFilterTodos([...filterTodos, newElem]);
+  };
 
-  const handlerSetSortStatus = sortStatus => {
-    let sortedTodos = filterTodos.sort((a, b) => a.key - b.key).slice(0)
+  const handlerSetSortStatus = (sortStatus) => {
+    let sortedTodos = filterTodos.sort((a, b) => a.key - b.key).slice(0);
     if (sortStatus === "down") {
-      sortedTodos = filterTodos.sort((a, b) => b.key - a.key).slice(0)
+      sortedTodos = filterTodos.sort((a, b) => b.key - a.key).slice(0);
     }
     setFilterTodos(sortedTodos);
-  }
+  };
 
   return (
     <div className="conteiner">
       <div>
         <div className="todo">
           <h1>ToDo</h1>
-          <Input newElemSetter={newElem => handlerNewElemSetter(newElem)}></Input>
+          <Input
+            newElemSetter={(newElem) => handlerNewElemSetter(newElem)}
+          ></Input>
         </div>
-        <Filter todosFilter={(status) => todosFilter(status)} setSortStatus={(sortStatus) => handlerSetSortStatus(sortStatus)} />
-        <div className="todo-main">
-        </div>
+        <Filter
+          todosFilter={(status) => todosFilter(status)}
+          setSortStatus={(sortStatus) => handlerSetSortStatus(sortStatus)}
+        />
+        <div className="todo-main"></div>
       </div>
       <TodoList
-        todos={filterTodos.slice(currentPage * todosPerPage, currentPage * todosPerPage + todosPerPage)}
+        todos={filterTodos.slice(
+          currentPage * todosPerPage,
+          currentPage * todosPerPage + todosPerPage
+        )}
         removeItem={(key) => handlerRemoveItem(key)}
         changeCondition={(key) => handlerChangeCondition(key)}
-        changeTask={(key, newText) => handlerChangeTask(key, newText)}>
-      </TodoList>
+        changeTask={(key, newText) => handlerChangeTask(key, newText)}
+      ></TodoList>
       {todos.length > 0 && (
         <Paginate
           setCurrentPage={(value) => setCurrentPage(value)}
           valueCurrentPage={currentPage}
           countTodoElem={filterTodos.length}
-          countElemPerPage={todosPerPage}>
-        </Paginate>
+          countElemPerPage={todosPerPage}
+        ></Paginate>
       )}
     </div>
   );
