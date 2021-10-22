@@ -19,7 +19,24 @@ body {
   justify-content: center;
   align-items: center;
 }
-
+@media screen and (device-width: 1000px){
+.todo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-width: 60vw;
+  }
+  li {
+    display: flex;
+    justify-content: space-between;
+    border: 2px solid #212529;
+    margin-top: 10px;
+    min-width: 40vw;
+    height: 8vh;
+    border-radius: 1rem;
+}
+}
 .conteiner {
   min-width: 50vw;
   min-height: 98vh;

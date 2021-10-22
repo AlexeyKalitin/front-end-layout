@@ -26,30 +26,21 @@ function App() {
   }
 
   const changeCondition = key => {
-    let upgradedElem = todos.map(item => {
-      if (item.key === key) {
-        return Object.assign({}, item, { isDone: true })
-      }
-      return item
-    })
+    let upgradedElem = todos.slice(0)
+    todos.find((elem, ind) => { if (elem.key === key) { upgradedElem[ind].isDone = true; } })
     setTodos(upgradedElem)
-    upgradedElem = filterTodos.map(item => {
-      if (item.key === key) {
-        return Object.assign({}, item, { isDone: true })
-      }
-      return item
-    })
+    upgradedElem = filterTodos.slice(0)
+    filterTodos.find((elem, ind) => { if (elem.key === key) { upgradedElem[ind].isDone = true; } })
     setFilterTodos(upgradedElem)
+
   }
 
-  const handlerChangeTask = (elem, newText) => {
-    const upgradedElem = todos.map(item => {
-      if (item.key === elem) {
-        return Object.assign({}, item, { text: newText })
-      }
-      return item
-    })
+  const handlerChangeTask = (key, newText) => {
+    let upgradedElem = todos.slice(0)
+    todos.find((elem, ind) => { if (elem.key === key) { upgradedElem[ind].text = { newText }; } })
     setTodos(upgradedElem)
+    upgradedElem = filterTodos.slice(0)
+    filterTodos.find((elem, ind) => { if (elem.key === key) { upgradedElem[ind].text = { newText }; } })
     setFilterTodos(upgradedElem)
   }
 
@@ -59,22 +50,18 @@ function App() {
   }
 
   const handlerSetSortStatus = sortStatus => {
-    const newMass = []
-    let sortedTodos = filterTodos.sort((a, b) => a.key - b.key)
+    let sortedTodos = filterTodos.sort((a, b) => a.key - b.key).slice(0)
     if (sortStatus === "down") {
-      sortedTodos = filterTodos.sort((a, b) => b.key - a.key)
+      sortedTodos = filterTodos.sort((a, b) => b.key - a.key).slice(0)
     }
-    Object.assign(newMass, sortedTodos)
-    setFilterTodos(newMass);
+    setFilterTodos(sortedTodos);
   }
 
   return (
     <div className="conteiner">
       <div>
-
         <div className="todo">
           <h1>ToDo</h1>
-
           <Input newElemSetter={newElem => handlerNewElemSetter(newElem)}></Input>
         </div>
         <Filter todosFilter={(status) => todosFilter(status)} setSortStatus={(sortStatus) => handlerSetSortStatus(sortStatus)} />
@@ -85,7 +72,7 @@ function App() {
         todos={filterTodos.slice(currentPage * todosPerPage, currentPage * todosPerPage + todosPerPage)}
         removeItem={(id) => removeItem(id)}
         changeCondition={(key) => changeCondition(key)}
-        changeTask={(elem, newText) => handlerChangeTask(elem, newText)}>
+        changeTask={(key, newText) => handlerChangeTask(key, newText)}>
       </TodoList>
       {todos.length > 0 && (
         <Paginate
