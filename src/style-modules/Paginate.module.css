@@ -1,0 +1,32 @@
+
+.paginate__button {
+    min-width: 2vw;
+    min-height: 3vh;
+    width: 4vw;
+   height: 6vh;
+  max-width: 4vw;
+  max-height: 6vh;
+  /* Safari */
+  transition-duration: 0.4s;
+  background-color: white;
+  cursor: pointer;
+  border-radius: 1rem;
+  font-size: 1.2rem;
+
+}
+
+.paginate__button-active { 
+    background-color: black;
+    color: white;
+  }
+
+.paginate__button:hover {
+  background-color: black;
+  color: white;
+}
+.paginate {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 40vw;
+}

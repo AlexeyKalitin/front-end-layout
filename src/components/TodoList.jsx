@@ -1,54 +1,27 @@
-import React from "react";
-import "../style.css";
-import undone from "../undone.svg";
-import trashbin from "../trash.svg";
-import done from "../icon.svg";
-import arrowdown from "../arrowdown.svg";
+import "../style-modules/TodoList.module.css";
+import TodosElement from "./TodoElement";
 
-function TodoList(props) {
-  const { list, remove, changeCondition } = props;
-  console.log(list);
-  if(list.length===0)
-  {return <h1 style={{marginTop: "2vw"}}>Nothing...</h1>}
-  else{
+function TodoList( { todos, removeItem, changeCondition, changeTask }) {
+
+  if (todos.length === 0) {
+    return <h1 style={{ marginTop: "2vw" }}>Nothing...</h1>;
+  } else {
     return (
       <ul className="todo-list">
-        {list.map((task, index) => {
+        {todos.map((todo, index) => {
           return (
-            <li key={list.key}>
-              {task.isDone ===false && (
-                <button 
-                onClick={() => changeCondition(task.key)}
-                data-tooltip="Undone" className="todo-list__button">
-                  <img src={undone} className="todo-list__picture" />
-                </button>
-              )}
-  
-              {task.isDone ===true && (
-                <button data-tooltip="Done" className="todo-list__button">
-                  <img src={done} className="todo-list__picture" />
-                </button>
-              )}
-  
-              <p className="todo-list__text" key={index}>
-                {task.text}
-              </p>
-              <p className="todo-list__date">{task.date}</p>
-  
-              <button
-                onClick={() => remove(task.key)}
-                title="Delete task"
-                className="todo-list__trashbin"
-              >
-                <img src={trashbin} alt="Кнопка «button»" />
-              </button>
-            </li>
+            <TodosElement
+              key={index}
+              todo={todo}
+              removeItem={removeItem}
+              changeCondition={changeCondition}
+              changeTask={changeTask}
+            ></TodosElement>
           );
         })}
       </ul>
     );
   }
-  
 }
 
 export default TodoList;
