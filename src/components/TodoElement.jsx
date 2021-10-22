@@ -1,7 +1,7 @@
 import "../style-modules/TodoElement.module.css";
-import undone from "../undone.svg";
-import trashbin from "../trash.svg";
-import done from "../icon.svg";
+import undone from "../images/undone.svg";
+import trashbin from "../images/trash.svg";
+import done from "../images/icon.svg";
 import { useState } from "react";
 
 function TodoElement({ todo, removeItem, changeCondition, changeTask }) {

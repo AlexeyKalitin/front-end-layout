@@ -9,22 +9,22 @@ function Input({ newElemSetter }) {
     setValue(event.target.value);
   };
 
-  const handlerOnKeyDown = e => {
+  const handlerOnKeyDown = (e) => {
     if (value[0] !== " " && value !== "") {
       if (e.key === "Enter") {
         const newElem = {
           key: currentDate.getTime(),
           text: value,
           isDone: false,
-          date: `${currentDate.getDay()}.${currentDate.getMonth() + 1
-            }.${currentDate.getFullYear()} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`,
+          date: `${currentDate.getDay()}.${
+            currentDate.getMonth() + 1
+          }.${currentDate.getFullYear()} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`,
         };
         setValue("");
         newElemSetter(newElem);
       }
     }
-  }
-
+  };
 
   return (
     <div className="input">

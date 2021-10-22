@@ -4,8 +4,8 @@ import Input from "./components/Input"
 import Filter from "./components/Filter"
 import Paginate from "./components/Paginate"
 import TodoList from "./components/TodoList";
-function App() {
 
+function App() {
   const [todos, setTodos] = useState([]);
   const [filterTodos, setFilterTodos] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
@@ -20,27 +20,28 @@ function App() {
     setCurrentPage(0)
   }
 
-  const removeItem = id => {
-    setTodos(todos.filter(x => (x.key !== id)))
-    setFilterTodos(filterTodos.filter(x => (x.key !== id)))
+  const handlerRemoveItem = key => {
+    setTodos(todos.filter(x => (x.key !== key)))
+    setFilterTodos(filterTodos.filter(x => (x.key !== key)))
   }
 
-  const changeCondition = key => {
+  const handlerChangeCondition = key => {
     let upgradedElem = todos.slice(0)
-    todos.find((elem, ind) => { if (elem.key === key) { upgradedElem[ind].isDone = true; } })
+    todos.forEach((elem, ind) => { if (elem.key === key) { upgradedElem[ind].isDone = true; } })
     setTodos(upgradedElem)
-    upgradedElem = filterTodos.slice(0)
-    filterTodos.find((elem, ind) => { if (elem.key === key) { upgradedElem[ind].isDone = true; } })
-    setFilterTodos(upgradedElem)
 
+    upgradedElem = filterTodos.slice(0)
+    filterTodos.forEach((elem, ind) => { if (elem.key === key) { upgradedElem[ind].isDone = true; } })
+    setFilterTodos(upgradedElem)
   }
 
   const handlerChangeTask = (key, newText) => {
     let upgradedElem = todos.slice(0)
-    todos.find((elem, ind) => { if (elem.key === key) { upgradedElem[ind].text = { newText }; } })
+    todos.forEach((elem, ind) => { if (elem.key === key) { upgradedElem[ind].text = { newText }; } })
     setTodos(upgradedElem)
+
     upgradedElem = filterTodos.slice(0)
-    filterTodos.find((elem, ind) => { if (elem.key === key) { upgradedElem[ind].text = { newText }; } })
+    filterTodos.forEach((elem, ind) => { if (elem.key === key) { upgradedElem[ind].text = { newText }; } })
     setFilterTodos(upgradedElem)
   }
 
@@ -70,8 +71,8 @@ function App() {
       </div>
       <TodoList
         todos={filterTodos.slice(currentPage * todosPerPage, currentPage * todosPerPage + todosPerPage)}
-        removeItem={(id) => removeItem(id)}
-        changeCondition={(key) => changeCondition(key)}
+        removeItem={(key) => handlerRemoveItem(key)}
+        changeCondition={(key) => handlerChangeCondition(key)}
         changeTask={(key, newText) => handlerChangeTask(key, newText)}>
       </TodoList>
       {todos.length > 0 && (

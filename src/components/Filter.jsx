@@ -1,7 +1,7 @@
 import "../style-modules/filter.module.css";
 import React, { useState } from "react";
-import arrowup from "../arrowup.svg";
-import arrowdown from "../arrowdown.svg";
+import arrowup from "../images/arrowup.svg";
+import arrowdown from "../images/arrowdown.svg";
 function Filter({ todosFilter, setSortStatus }) {
   const [activeFilterSort, setActiveFilterSort] = useState("all");
 
