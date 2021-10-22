@@ -1,7 +1,7 @@
 import "../style-modules/TodoList.module.css";
 import TodosElement from "./TodoElement";
 
-function TodoList( { todos, removeItem, changeCondition, changeTask }) {
+function TodoList( { todos, removeTodo, changeTodoCondition, changeTask }) {
 
   if (todos.length === 0) {
     return <h1 style={{ marginTop: "2vw" }}>Nothing...</h1>;
@@ -13,8 +13,8 @@ function TodoList( { todos, removeItem, changeCondition, changeTask }) {
             <TodosElement
               key={index}
               todo={todo}
-              removeItem={removeItem}
-              changeCondition={changeCondition}
+              removeTodo={removeTodo}
+              changeTodoCondition={changeTodoCondition}
               changeTask={changeTask}
             ></TodosElement>
           );

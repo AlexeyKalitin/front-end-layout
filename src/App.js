@@ -20,12 +20,12 @@ function App() {
     setCurrentPage(0);
   }
 
-  const handlerRemoveItem = (key) => {
+  const handlerRemoveTodo = (key) => {
     setTodos(todos.filter((x) => x.key !== key));
     setFilterTodos(filterTodos.filter((x) => x.key !== key));
   };
 
-  const handlerChangeCondition = (key) => {
+  const handlerChangeTodoCondition = (key) => {
     let upgradedElem = todos.slice(0);
     todos.forEach((elem, ind) => {
       if (elem.key === key) {
@@ -94,8 +94,8 @@ function App() {
           currentPage * todosPerPage,
           currentPage * todosPerPage + todosPerPage
         )}
-        removeItem={(key) => handlerRemoveItem(key)}
-        changeCondition={(key) => handlerChangeCondition(key)}
+        removeTodo={(key) => handlerRemoveTodo(key)}
+        changeTodoCondition={(key) => handlerChangeTodoCondition(key)}
         changeTask={(key, newText) => handlerChangeTask(key, newText)}
       ></TodoList>
       {todos.length > 0 && (

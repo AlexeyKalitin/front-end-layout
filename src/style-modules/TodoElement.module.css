@@ -2,6 +2,8 @@
   font-size: 1.6rem;
   max-width: 13vw;
 }
+
+
 @media screen and (device-width: 1000px) {
   .todo {
     display: flex;

@@ -4,7 +4,7 @@ import trashbin from "../images/trash.svg";
 import done from "../images/icon.svg";
 import { useState } from "react";
 
-function TodoElement({ todo, removeItem, changeCondition, changeTask }) {
+function TodoElement({ todo, removeTodo, changeTodoCondition, changeTask }) {
   const [isEditable, setIsEditable] = useState(false);
 
   const handleKeyDown = (e) => {
@@ -23,9 +23,9 @@ function TodoElement({ todo, removeItem, changeCondition, changeTask }) {
   };
 
   return (
-    <li key={todo.key}>
+    <li key={todo.key} >
       <button
-        onClick={() => changeCondition(todo.key)}
+        onClick={() => changeTodoCondition(todo.key)}
         title="done"
         className="todo-list__button"
       >
@@ -55,7 +55,7 @@ function TodoElement({ todo, removeItem, changeCondition, changeTask }) {
 
       <p className="todo-list__date">{todo.date}</p>
       <button
-        onClick={() => removeItem(todo.key)}
+        onClick={() => removeTodo(todo.key)}
         title="delete"
         className="todo-list__trashbin"
       >
