@@ -16,9 +16,8 @@ function Input({ newElemSetter }) {
           key: currentDate.getTime(),
           text: value,
           isDone: false,
-          date: `${currentDate.getDay()}.${
-            currentDate.getMonth() + 1
-          }.${currentDate.getFullYear()} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`,
+          date: `${currentDate.getDay()}.${currentDate.getMonth()+1}.${currentDate.getFullYear()} 
+          ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`,
         };
         setValue("");
         newElemSetter(newElem);

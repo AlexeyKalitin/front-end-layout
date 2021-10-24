@@ -1,5 +1,5 @@
 import "./style-modules/style.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Input from "./components/Input";
 import Filter from "./components/Filter";
 import Paginate from "./components/Paginate";
@@ -11,6 +11,17 @@ function App() {
   const [currentPage, setCurrentPage] = useState(0);
   const [todosPerPage] = useState(5);
 
+  useEffect(() => {
+    try{
+    const fetch = JSON.parse(localStorage.getItem("Todos"));
+    console.log(fetch)
+    setFilterTodos(fetch === "" || fetch === null || fetch === undefined? [] : fetch);
+    setTodos(fetch === "" || fetch === null || fetch === undefined? [] : fetch);}
+    catch(e){
+      console.log(e)
+    }
+  }, []);
+
   function todosFilter(status) {
     if (status === "all") {
       setFilterTodos(todos);
@@ -20,50 +31,61 @@ function App() {
     setCurrentPage(0);
   }
 
+  const SetThreeState = (first, second, third) => {
+    setTodos(first);
+    setFilterTodos(second);
+    localStorage.setItem("Todos", third);
+  };
+
   const handlerRemoveTodo = (key) => {
-    setTodos(todos.filter((x) => x.key !== key));
-    setFilterTodos(filterTodos.filter((x) => x.key !== key));
+    SetThreeState(
+      todos.filter((x) => x.key !== key),
+      filterTodos.filter((x) => x.key !== key),
+      JSON.stringify(todos.filter((x) => x.key !== key))
+    );
   };
 
-  const handlerChangeTodoCondition = (key) => {
-    let upgradedElem = todos.slice(0);
-    todos.forEach((elem, ind) => {
-      if (elem.key === key) {
-        upgradedElem[ind].isDone = true;
-      }
-    });
-    setTodos(upgradedElem);
+  const replaceElementField = (elem,field,value)=>{
+    if(field === "isDone"){
+      elem.isDone = value
+    }
+    if(field === "text"){
+      elem.text = value
+    }
+  }
 
-    upgradedElem = filterTodos.slice(0);
-    filterTodos.forEach((elem, ind) => {
-      if (elem.key === key) {
-        upgradedElem[ind].isDone = true;
-      }
-    });
-    setFilterTodos(upgradedElem);
+  const handlerChangeTodoCondition = (elem) => {
+    const todosIndex = todos.indexOf(elem)
+    const filterTodosIndex = filterTodos.indexOf(elem)
+    replaceElementField(elem,"isDone", !elem.isDone)
+    todos[todosIndex] = elem
+    filterTodos[filterTodosIndex] = elem
+    SetThreeState(
+      todos.slice(0),
+      filterTodos.slice(0),
+      JSON.stringify(todos)
+    )
   };
 
-  const handlerChangeTask = (key, newText) => {
-    let upgradedElem = todos.slice(0);
-    todos.forEach((elem, ind) => {
-      if (elem.key === key) {
-        upgradedElem[ind].text = newText;
-      }
-    });
-    setTodos(upgradedElem);
-
-    upgradedElem = filterTodos.slice(0);
-    filterTodos.forEach((elem, ind) => {
-      if (elem.key === key) {
-        upgradedElem[ind].text = newText;
-      }
-    });
-    setFilterTodos(upgradedElem);
+  const handlerChangeTask = (elem, newText) => {
+    const todosIndex = todos.indexOf(elem)
+    const filterTodosIndex = filterTodos.indexOf(elem)
+    replaceElementField(elem,"text", newText.slice(0))
+    todos[todosIndex] = elem
+    filterTodos[filterTodosIndex] = elem
+    SetThreeState(
+      todos.slice(0),
+      filterTodos.slice(0),
+      JSON.stringify(todos.slice(0))
+    )
   };
 
   const handlerNewElemSetter = (newElem) => {
-    setTodos([...todos, newElem]);
-    setFilterTodos([...filterTodos, newElem]);
+    SetThreeState(
+      [...todos, newElem],
+      [...filterTodos, newElem],
+      JSON.stringify([...todos, newElem])
+    )
   };
 
   const handlerSetSortStatus = (sortStatus) => {
@@ -95,8 +117,8 @@ function App() {
           currentPage * todosPerPage + todosPerPage
         )}
         removeTodo={(key) => handlerRemoveTodo(key)}
-        changeTodoCondition={(key) => handlerChangeTodoCondition(key)}
-        changeTask={(key, newText) => handlerChangeTask(key, newText)}
+        changeTodoCondition={(elem) => handlerChangeTodoCondition(elem)}
+        changeTask={(elem, newText) => handlerChangeTask(elem, newText)}
       ></TodoList>
       {todos.length > 0 && (
         <Paginate

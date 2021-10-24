@@ -11,7 +11,8 @@ function TodoElement({ todo, removeTodo, changeTodoCondition, changeTask }) {
     e.target.className = "todo-list__input";
     if (e.target.value[0] !== " " && e.target.value !== "") {
       if (e.key === "Enter") {
-        changeTask(todo.key, e.target.value);
+        console.log(e.target.value)
+        changeTask(todo, e.target.value);
         setIsEditable(false);
       }
       if (e.key === "Escape") {
@@ -25,7 +26,7 @@ function TodoElement({ todo, removeTodo, changeTodoCondition, changeTask }) {
   return (
     <li key={todo.key} >
       <button
-        onClick={() => changeTodoCondition(todo.key)}
+        onClick={() => changeTodoCondition(todo)}
         title="done"
         className="todo-list__button"
       >
