@@ -4,88 +4,110 @@ import Input from "./components/Input";
 import Filter from "./components/Filter";
 import Paginate from "./components/Paginate";
 import TodoList from "./components/TodoList";
+const axios = require('axios').default
 
 function App() {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [APIResponseError, setAPIResponseError] = useState(false);
   const [todos, setTodos] = useState([]);
   const [filterTodos, setFilterTodos] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [todosPerPage] = useState(5);
+  const sereverUrl="https://todo-api-learning.herokuapp.com/v1"
 
   useEffect(() => {
-    try {
-      const fetch = JSON.parse(localStorage.getItem("Todos"));
-      setFilterTodos(fetch === "" || fetch === null || fetch === undefined ? [] : fetch);
-      setTodos(fetch === "" || fetch === null || fetch === undefined ? [] : fetch);
+    const fetchTodos = async() => {
+      await axios.get(`${sereverUrl}/tasks/${process.env.REACT_APP_CLIENT_ID}`)
+        .then(response => {
+          console.log(response.data)
+         setTodos(response.data)
+         setFilterTodos(response.data)  
+        })
+        .catch(error => {
+          // handle error
+          console.log(error.message)
+          //setAPIResponseError(error.response);
+        });
     }
-    catch (e) {
-      console.log(e)
-    }
-  }, []);
+    fetchTodos();
+   
+  }, [])
 
   function todosFilter(status) {
     if (status === "all") {
       setFilterTodos(todos);
     } else {
-      setFilterTodos(todos.filter((item) => item.isDone === status));
+      setFilterTodos(todos.filter((item) => item.done === status));
     }
     setCurrentPage(0);
   }
 
-  const setStates = (first, second, third) => {
+  const SetStates = async (first, second) => {
     setTodos(first);
-    setFilterTodos(second);
-    localStorage.setItem("Todos", third);
+    setFilterTodos(second);    
   };
 
   const handlerRemoveTodo = (key) => {
-    setStates(
+    SetStates(
       todos.filter((x) => x.key !== key),
       filterTodos.filter((x) => x.key !== key),
-      JSON.stringify(todos.filter((x) => x.key !== key))
     );
   };
 
   const replaceElementField = (elem, field, value) => {
     if (field === "isDone") {
-      elem.isDone = value
+      elem.done = value
     }
-    if (field === "text") {
-      elem.text = value
+    if (field === "name") {
+      elem.name = value
     }
   }
 
   const handlerChangeTodoCondition = (elem) => {
     const todosIndex = todos.indexOf(elem)
     const filterTodosIndex = filterTodos.indexOf(elem)
-    replaceElementField(elem, "isDone", !elem.isDone)
+    replaceElementField(elem, "isDone", !elem.done)
     todos[todosIndex] = elem
     filterTodos[filterTodosIndex] = elem
-    setStates(
+    SetStates(
       todos.slice(0),
       filterTodos.slice(0),
-      JSON.stringify(todos)
     )
   };
 
   const handlerChangeTask = (elem, newText) => {
     const todosIndex = todos.indexOf(elem)
     const filterTodosIndex = filterTodos.indexOf(elem)
-    replaceElementField(elem, "text", newText.slice(0))
+    replaceElementField(elem, "name", newText.slice(0))
     todos[todosIndex] = elem
     filterTodos[filterTodosIndex] = elem
-    setStates(
+    SetStates(
       todos.slice(0),
       filterTodos.slice(0),
       JSON.stringify(todos.slice(0))
     )
   };
 
+const setItemAPI = async(item) => {
+  await axios.post(`${sereverUrl}/task/${process.env.REACT_APP_CLIENT_ID}`,item)
+    .then(response => {
+      console.log(response)
+      console.log(response.data.uuid)
+      item.uuid = response.data.uuid
+    })
+    .catch(error => {
+      console.log(error)
+      //console.log(error.message)
+    });
+  }
+
   const handlerNewElemSetter = (newElem) => {
-    setStates(
+    setItemAPI(newElem)
+    SetStates(
       [...todos, newElem],
-      [...filterTodos, newElem],
-      JSON.stringify([...todos, newElem])
+      [...filterTodos, newElem]
     )
+    console.log(filterTodos)
   };
 
   const handlerSetSortStatus = (sortStatus) => {
@@ -95,13 +117,6 @@ function App() {
     }
     setFilterTodos(sortedTodos);
   };
-
-  const sliceOnPages = () => {
-    return filterTodos.slice(
-      currentPage * todosPerPage,
-      currentPage * todosPerPage + todosPerPage
-    )
-  }
 
   return (
     <div className="conteiner">
@@ -120,11 +135,14 @@ function App() {
       </div>
 
       <TodoList
-        todos={sliceOnPages()}
+        todos={filterTodos.slice(
+          currentPage * todosPerPage,
+          currentPage * todosPerPage + todosPerPage
+        )}
         removeTodo={(key) => handlerRemoveTodo(key)}
         changeTodoCondition={(elem) => handlerChangeTodoCondition(elem)}
         changeTask={(elem, newText) => handlerChangeTask(elem, newText)}
-      />
+      ></TodoList>
 
       {filterTodos.length > 0 && (
         <Paginate

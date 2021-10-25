@@ -29,7 +29,7 @@ function TodoElement({ todo, removeTodo, changeTodoCondition, changeTask }) {
       }}
       autoFocus
       maxLength="16"
-      defaultValue={todo.text}
+      defaultValue={todo.name}
       onKeyDown={handleKeyDown}
       className="todo-list__input"
     ></input>
@@ -43,7 +43,7 @@ function TodoElement({ todo, removeTodo, changeTodoCondition, changeTask }) {
     >
       <img
         alt="undone"
-        src={todo.isDone === false ? undone : done}
+        src={todo.done === false ? undone : done}
         className="todo-list__picture"
       />
     </button>
@@ -63,9 +63,9 @@ function TodoElement({ todo, removeTodo, changeTodoCondition, changeTask }) {
     <li key={todo.key}>
       {changeConditionButton}
       <span onClick={() => setIsEditable(true)} className="todo-list__text">
-        {isEditable ? changingInput : <p>{todo.text}</p>}
+        {isEditable ? changingInput : <p>{todo.name}</p>}
       </span>
-      <p className="todo-list__date">{todo.date}</p>
+      <p className="todo-list__date">{todo.updatedAt}</p>
       {removeTodoButton}
     </li>
   );
