@@ -74,7 +74,21 @@ function App() {
       todos.slice(0),
       filterTodos.slice(0),
     )
+    patchItemAPI(elem)
   };
+
+  const patchItemAPI = async (elem) =>{
+    await axios.patch(`${sereverUrl}/task/${process.env.REACT_APP_CLIENT_ID}/${elem.uuid}`,elem)
+    .then(response => {
+      console.log(response)
+      console.log(response.data)
+    })
+    .catch(error => {
+      console.log(error)
+      //console.log(error.message)
+    });
+  }
+
 
   const handlerChangeTask = (elem, newText) => {
     const todosIndex = todos.indexOf(elem)

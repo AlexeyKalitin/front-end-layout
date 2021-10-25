@@ -21,6 +21,7 @@ function Input({ newElemSetter, nonExistYet }) {
           name: value,
           done: false,
           date: getTime(),
+          createdAt: getTime()
         };
         setValue("");
         newElemSetter(newElem);
