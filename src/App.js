@@ -130,14 +130,16 @@ const setItemAPI = async(item) => {
     }
     setFilterTodos(sortedTodos);
   };
+  const IsUniqueName = (value) => {
+    return todos.every(x => x.name !== value)
+  };
 
   return (
     <div className="conteiner">
       <div>
         <div className="todo">
           <h1>ToDo</h1>
-          <Input
-            newElemSetter={(newElem) => handlerNewElemSetter(newElem)}
+          <Input newElemSetter={(newElem) => handlerNewElemSetter(newElem)} nonExistYet={(value) => IsUniqueName(value)}
           />
         </div>
 

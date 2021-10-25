@@ -1,7 +1,7 @@
 import "../style-modules/Input.module.css";
 import React, { useState } from "react";
 
-function Input({ newElemSetter }) {
+function Input({ newElemSetter, nonExistYet }) {
   const [value, setValue] = useState("");
   const currentTime = new Date();
 
@@ -14,7 +14,7 @@ function Input({ newElemSetter }) {
   }
 
   const handlerOnKeyDown = (e) => {
-    if (value[0] !== " " && value !== "") {
+    if (value[0] !== " " && value !== "" && value.length > 2 && nonExistYet(value) ) {
       if (e.key === "Enter") {
         const newElem = {
           key: currentTime.getTime(),
