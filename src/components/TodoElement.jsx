@@ -11,7 +11,6 @@ function TodoElement({ todo, removeTodo, changeTodoCondition, changeTask }) {
     e.target.className = "todo-list__input";
     if (e.target.value[0] !== " " && e.target.value !== "") {
       if (e.key === "Enter") {
-        console.log(e.target.value)
         changeTask(todo, e.target.value);
         setIsEditable(false);
       }
@@ -19,49 +18,55 @@ function TodoElement({ todo, removeTodo, changeTodoCondition, changeTask }) {
         setIsEditable(false);
       }
     } else {
-      e.target.className = "todo-list__input-error";
+      e.target.className = "todo-list__input-error"; //ok?
     }
   };
 
+  const changingInput = (
+    <input
+      onBlur={() => {
+        setIsEditable(false);
+      }}
+      autoFocus
+      maxLength="16"
+      defaultValue={todo.text}
+      onKeyDown={handleKeyDown}
+      className="todo-list__input"
+    ></input>
+  );
+
+  const changeConditionButton = (
+    <button
+      onClick={() => changeTodoCondition(todo)}
+      title="done"
+      className="todo-list__button"
+    >
+      <img
+        alt="undone"
+        src={todo.isDone === false ? undone : done}
+        className="todo-list__picture"
+      />
+    </button>
+  );
+
+  const removeTodoButton = (
+    <button
+      onClick={() => removeTodo(todo.key)}
+      title="delete"
+      className="todo-list__trashbin"
+    >
+      <img alt="delete" src={trashbin} />
+    </button>
+  );
+
   return (
-    <li key={todo.key} >
-      <button
-        onClick={() => changeTodoCondition(todo)}
-        title="done"
-        className="todo-list__button"
-      >
-        <img
-          alt="undone"
-          src={todo.isDone === false ? undone : done}
-          className="todo-list__picture"
-        />
-      </button>
-
+    <li key={todo.key}>
+      {changeConditionButton}
       <span onClick={() => setIsEditable(true)} className="todo-list__text">
-        {isEditable ? (
-          <input
-            onBlur={() => {
-              setIsEditable(false);
-            }}
-            autoFocus
-            maxLength="16"
-            defaultValue={todo.text}
-            onKeyDown={handleKeyDown}
-            className="todo-list__input"
-          ></input>
-        ) : (
-          <p>{todo.text}</p>
-        )}
+        {isEditable ? changingInput : <p>{todo.text}</p>}
       </span>
-
       <p className="todo-list__date">{todo.date}</p>
-      <button
-        onClick={() => removeTodo(todo.key)}
-        title="delete"
-        className="todo-list__trashbin"
-      >
-        <img alt="delete" src={trashbin} />
-      </button>
+      {removeTodoButton}
     </li>
   );
 }

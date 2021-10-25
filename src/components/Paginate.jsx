@@ -35,39 +35,42 @@ function Paginate({
     if (pageCount - 1 > currentPage) setCurrentPage(currentPage + 1);
   };
 
+  const setPrevPage = () => {
+    if (currentPage > 0) setCurrentPage(currentPage - 1);
+  };
+
+  const changeCurrentPage = (ind) => {
+    setCurrentPage(ind - 1);
+  };
+
+  const todosShown = filterArr.map((ind) => {
+    if (arr.length > 1) {
+      return (
+        <div key={ind} className="paginate__button">
+          <button
+            className={
+              ind - 1 === currentPage
+                ? "paginate__button paginate__button-active"
+                : "paginate__button"
+            }
+            onClick={() => changeCurrentPage(ind)}
+          >
+            {ind}
+          </button>
+        </div>
+      );
+    } else return <div key={ind}></div>;
+  });
+
+  
   return (
     <div className="paginate">
       <div className="paginate__button">
-        <button
-          className="paginate__button"
-          onClick={() => {
-            if (currentPage > 0) setCurrentPage(currentPage - 1);
-          }}
-        >
+        <button className="paginate__button" onClick={setPrevPage}>
           Prev
         </button>
       </div>
-      {filterArr.map((ind) => {
-        if (arr.length > 1) {
-          return (
-            <div key={ind} className="paginate__button">
-              <button
-                className={
-                  ind - 1 === currentPage
-                    ? "paginate__button paginate__button-active"
-                    : "paginate__button"
-                }
-                onClick={() => {
-                  setCurrentPage(ind - 1);
-                }}
-              >
-                {ind}
-              </button>
-            </div>
-          );
-        } else return <div key={ind}></div>;
-      })}
-
+      {todosShown}
       <div className="paginate__button">
         <button className="paginate__button" onClick={clickHandler}>
           Next

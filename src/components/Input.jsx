@@ -2,22 +2,25 @@ import "../style-modules/Input.module.css";
 import React, { useState } from "react";
 
 function Input({ newElemSetter }) {
-  const [value, setValue] = useState("");
-  const currentDate = new Date();
+  const [value, setValue] = useState("")
+  const currentTime = new Date()
 
   const handleChange = (event) => {
     setValue(event.target.value);
-  };
+  }
+
+  const getTime = () =>{
+   return `${currentTime.toLocaleDateString()} ${currentTime.getHours()}:${currentTime.getMinutes()}:${currentTime.getSeconds()}`
+  }
 
   const handlerOnKeyDown = (e) => {
     if (value[0] !== " " && value !== "") {
       if (e.key === "Enter") {
         const newElem = {
-          key: currentDate.getTime(),
+          key: currentTime.getTime(),
           text: value,
           isDone: false,
-          date: `${currentDate.getDay()}.${currentDate.getMonth()+1}.${currentDate.getFullYear()} 
-          ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`,
+          date: getTime(),
         };
         setValue("");
         newElemSetter(newElem);

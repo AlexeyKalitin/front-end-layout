@@ -12,12 +12,12 @@ function App() {
   const [todosPerPage] = useState(5);
 
   useEffect(() => {
-    try{
-    const fetch = JSON.parse(localStorage.getItem("Todos"));
-    console.log(fetch)
-    setFilterTodos(fetch === "" || fetch === null || fetch === undefined? [] : fetch);
-    setTodos(fetch === "" || fetch === null || fetch === undefined? [] : fetch);}
-    catch(e){
+    try {
+      const fetch = JSON.parse(localStorage.getItem("Todos"));
+      setFilterTodos(fetch === "" || fetch === null || fetch === undefined ? [] : fetch);
+      setTodos(fetch === "" || fetch === null || fetch === undefined ? [] : fetch);
+    }
+    catch (e) {
       console.log(e)
     }
   }, []);
@@ -31,25 +31,25 @@ function App() {
     setCurrentPage(0);
   }
 
-  const SetThreeState = (first, second, third) => {
+  const setStates = (first, second, third) => {
     setTodos(first);
     setFilterTodos(second);
     localStorage.setItem("Todos", third);
   };
 
   const handlerRemoveTodo = (key) => {
-    SetThreeState(
+    setStates(
       todos.filter((x) => x.key !== key),
       filterTodos.filter((x) => x.key !== key),
       JSON.stringify(todos.filter((x) => x.key !== key))
     );
   };
 
-  const replaceElementField = (elem,field,value)=>{
-    if(field === "isDone"){
+  const replaceElementField = (elem, field, value) => {
+    if (field === "isDone") {
       elem.isDone = value
     }
-    if(field === "text"){
+    if (field === "text") {
       elem.text = value
     }
   }
@@ -57,10 +57,10 @@ function App() {
   const handlerChangeTodoCondition = (elem) => {
     const todosIndex = todos.indexOf(elem)
     const filterTodosIndex = filterTodos.indexOf(elem)
-    replaceElementField(elem,"isDone", !elem.isDone)
+    replaceElementField(elem, "isDone", !elem.isDone)
     todos[todosIndex] = elem
     filterTodos[filterTodosIndex] = elem
-    SetThreeState(
+    setStates(
       todos.slice(0),
       filterTodos.slice(0),
       JSON.stringify(todos)
@@ -70,10 +70,10 @@ function App() {
   const handlerChangeTask = (elem, newText) => {
     const todosIndex = todos.indexOf(elem)
     const filterTodosIndex = filterTodos.indexOf(elem)
-    replaceElementField(elem,"text", newText.slice(0))
+    replaceElementField(elem, "text", newText.slice(0))
     todos[todosIndex] = elem
     filterTodos[filterTodosIndex] = elem
-    SetThreeState(
+    setStates(
       todos.slice(0),
       filterTodos.slice(0),
       JSON.stringify(todos.slice(0))
@@ -81,7 +81,7 @@ function App() {
   };
 
   const handlerNewElemSetter = (newElem) => {
-    SetThreeState(
+    setStates(
       [...todos, newElem],
       [...filterTodos, newElem],
       JSON.stringify([...todos, newElem])
@@ -96,6 +96,13 @@ function App() {
     setFilterTodos(sortedTodos);
   };
 
+  const sliceOnPages = () => {
+    return filterTodos.slice(
+      currentPage * todosPerPage,
+      currentPage * todosPerPage + todosPerPage
+    )
+  }
+
   return (
     <div className="conteiner">
       <div>
@@ -103,24 +110,23 @@ function App() {
           <h1>ToDo</h1>
           <Input
             newElemSetter={(newElem) => handlerNewElemSetter(newElem)}
-          ></Input>
+          />
         </div>
+
         <Filter
           todosFilter={(status) => todosFilter(status)}
           setSortStatus={(sortStatus) => handlerSetSortStatus(sortStatus)}
         />
-        <div className="todo-main"></div>
       </div>
+
       <TodoList
-        todos={filterTodos.slice(
-          currentPage * todosPerPage,
-          currentPage * todosPerPage + todosPerPage
-        )}
+        todos={sliceOnPages()}
         removeTodo={(key) => handlerRemoveTodo(key)}
         changeTodoCondition={(elem) => handlerChangeTodoCondition(elem)}
         changeTask={(elem, newText) => handlerChangeTask(elem, newText)}
-      ></TodoList>
-      {todos.length > 0 && (
+      />
+
+      {filterTodos.length > 0 && (
         <Paginate
           setCurrentPage={(value) => setCurrentPage(value)}
           currentPage={currentPage}
