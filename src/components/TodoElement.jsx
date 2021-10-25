@@ -51,7 +51,7 @@ function TodoElement({ todo, removeTodo, changeTodoCondition, changeTask }) {
 
   const removeTodoButton = (
     <button
-      onClick={() => removeTodo(todo.key)}
+      onClick={() => removeTodo(todo.uuid)}
       title="delete"
       className="todo-list__trashbin"
     >

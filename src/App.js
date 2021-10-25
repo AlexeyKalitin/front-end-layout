@@ -47,11 +47,12 @@ function App() {
     setFilterTodos(second);    
   };
 
-  const handlerRemoveTodo = (key) => {
+  const handlerRemoveTodo = (elem) => {
     SetStates(
-      todos.filter((x) => x.key !== key),
-      filterTodos.filter((x) => x.key !== key),
+      todos.filter((x) => x.uuid !== elem),
+      filterTodos.filter((x) => x.uuid !== elem),
     );
+    removeItemAPI(elem)
   };
 
   const replaceElementField = (elem, field, value) => {
@@ -87,6 +88,18 @@ function App() {
       JSON.stringify(todos.slice(0))
     )
   };
+
+const removeItemAPI = async (id) =>{
+  await axios.delete(`${sereverUrl}/task/${process.env.REACT_APP_CLIENT_ID}/${id}`)
+  .then(response => {
+    console.log(response)
+    console.log(response.data)
+  })
+  .catch(error => {
+    console.log(error)
+    //console.log(error.message)
+  });
+}
 
 const setItemAPI = async(item) => {
   await axios.post(`${sereverUrl}/task/${process.env.REACT_APP_CLIENT_ID}`,item)
@@ -139,7 +152,7 @@ const setItemAPI = async(item) => {
           currentPage * todosPerPage,
           currentPage * todosPerPage + todosPerPage
         )}
-        removeTodo={(key) => handlerRemoveTodo(key)}
+        removeTodo={(id) => handlerRemoveTodo(id)}
         changeTodoCondition={(elem) => handlerChangeTodoCondition(elem)}
         changeTask={(elem, newText) => handlerChangeTask(elem, newText)}
       ></TodoList>
