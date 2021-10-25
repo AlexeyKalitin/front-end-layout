@@ -7,21 +7,27 @@ function Input({ newElemSetter, nonExistYet }) {
 
   const handleChange = (event) => {
     setValue(event.target.value);
-  }
-  
-  const getTime = () =>{
-   return `${currentTime.toLocaleDateString()} ${currentTime.getHours()}:${currentTime.getMinutes()}:${currentTime.getSeconds()}`
-  }
+  };
+
+  const getTime = () => {
+    return `${currentTime.getFullYear()}-${currentTime.getMonth() + 1}-${
+      currentTime.getDay() + 24
+    } ${currentTime.getHours()}:${currentTime.getMinutes()}:${currentTime.getSeconds()}`;
+  };
 
   const handlerOnKeyDown = (e) => {
-    if (value[0] !== " " && value !== "" && value.length > 2 && nonExistYet(value) ) {
+    if (
+      value[0] !== " " &&
+      value !== "" &&
+      value.length > 2 &&
+      nonExistYet(value)
+    ) {
       if (e.key === "Enter") {
         const newElem = {
           key: currentTime.getTime(),
           name: value,
           done: false,
-          date: getTime(),
-          createdAt: getTime()
+          updatedAt: getTime(),
         };
         setValue("");
         newElemSetter(newElem);

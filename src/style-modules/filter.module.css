@@ -6,6 +6,7 @@
   transition-duration: 0.4s;
   cursor: pointer;
   border-radius: 1rem;
+  justify-content: space-between;
 }
 .filter__arrow-down {
   background-color: white;
@@ -62,5 +63,5 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-left: 4.6rem;
+  
 }

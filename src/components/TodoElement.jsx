@@ -65,7 +65,7 @@ function TodoElement({ todo, removeTodo, changeTodoCondition, changeTask }) {
       <span onClick={() => setIsEditable(true)} className="todo-list__text">
         {isEditable ? changingInput : <p>{todo.name}</p>}
       </span>
-      <p className="todo-list__date">{todo.createdAt.replace(/[T-Z]|.000/g," ")}</p>
+      <p className="todo-list__date">{todo.updatedAt.replace(/[A-Z]|(\.\d{3})/g," ")}</p>
       {removeTodoButton}
     </li>
   );
