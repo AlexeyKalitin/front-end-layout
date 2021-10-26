@@ -1,20 +1,21 @@
 import "../style-modules/filter.module.css";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import arrowup from "../images/arrowup.svg";
 import arrowdown from "../images/arrowdown.svg";
 import FilterButton from "./filterButton";
 
-function Filter({ todosFilter, setSortStatus }) {
+function Filter({ setSortStatus }) {
   const [activeFilterSort, setActiveFilterSort] = useState("all");
-
-  const handlerFilterSort = (filterChoose) => {
-    setActiveFilterSort(filterChoose);
-  };
+  const [activeSortByDate, setActiveSortByDate] = useState("asc");
+  
+  useEffect(() => {
+    setSortStatus(activeFilterSort, activeSortByDate);
+  }, [activeFilterSort,activeSortByDate]);
 
   const ButtonArrowDown = (
     <button
       onClick={() => {
-        setSortStatus("desc", activeFilterSort);
+        setActiveSortByDate("desc");
       }}
       className={"filter__arrow-down"}
     >
@@ -25,7 +26,7 @@ function Filter({ todosFilter, setSortStatus }) {
   const ButtonArrowUp = (
     <button
       onClick={() => {
-        setSortStatus("asc", activeFilterSort);
+        setActiveSortByDate("asc");
       }}
       className={"filter__arrow-up"}
     >
@@ -37,26 +38,20 @@ function Filter({ todosFilter, setSortStatus }) {
     <span className="filter">
       <span className="filter-buttons">
         <FilterButton
-          todosFilter={todosFilter}
-          FilterSort={handlerFilterSort}
+          text="all"
+          setActiveFilterSort={setActiveFilterSort}
           activeFilterSort={activeFilterSort}
-          value="all"
-          sortType="all"
-        />
+        ></FilterButton>
         <FilterButton
-          todosFilter={todosFilter}
-          FilterSort={handlerFilterSort}
+          text="done"
+          setActiveFilterSort={setActiveFilterSort}
           activeFilterSort={activeFilterSort}
-          value={true}
-          sortType="done"
-        />
+        ></FilterButton>
         <FilterButton
-          todosFilter={todosFilter}
-          FilterSort={handlerFilterSort}
+          text="undone"
+          setActiveFilterSort={setActiveFilterSort}
           activeFilterSort={activeFilterSort}
-          value={false}
-          sortType="undone"
-        />
+        ></FilterButton>
       </span>
       <span className="filter-sort">
         <p className="sortBy-text">Sort by Date</p>

@@ -1,25 +1,14 @@
 import React from "react";
 
-function FilterButton({
-  todosFilter,
-  FilterSort,
-  activeFilterSort,
-  value,
-  sortType,
-}) {
+function FilterButton({ text, setActiveFilterSort, activeFilterSort }) {
   return (
     <button
       onClick={() => {
-        todosFilter(value);
-        FilterSort(sortType);
+        setActiveFilterSort(text);
       }}
-      className={
-        activeFilterSort === sortType
-          ? "filter__button-active"
-          : "filter__button"
-      }
+      className={activeFilterSort === text?"filter__button-active":"filter__button"}
     >
-      {sortType}
+      {text}
     </button>
   );
 }

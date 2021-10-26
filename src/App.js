@@ -12,56 +12,50 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [APIResponseError, setAPIResponseError] = useState(false);
   const [todos, setTodos] = useState([]);
-  const [filterTodos, setFilterTodos] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [todosPerPage] = useState(5);
 
   useEffect(() => {
-    const fetchTodos = () => {
-      setIsLoaded(true);
-      axios
-        .get(`${sereverUrl}/tasks/${apiKey}`)
-        .then((response) => {
-          setTodos(response.data);
-          setFilterTodos(response.data);
-          setIsLoaded(false);
-        })
-        .catch((error) => {
-          showAlertAboutError(error.message);
-        });
-    };
-    fetchTodos();
+    setIsLoaded(true);
+    getItemsAPI("all", "asc");
+    setIsLoaded(false);
   }, []);
+
+  const getItemsAPI = (filterBy, sortStatus) => {
+    setIsLoaded(true);
+    console.log(sortStatus, filterBy);
+    if (filterBy === "all") {
+      filterBy = "";
+    }
+    axios
+      .get(
+        `${sereverUrl}/tasks/${apiKey}?filterBy=${filterBy}&order=${sortStatus}`
+      )
+      .then((response) => {
+        setTodos(response.data);
+        setIsLoaded(false);
+      })
+      .catch((error) => {
+        showAlertAboutError(error.message);
+      });
+  };
+
+  const delay = (ms) => {
+    setTimeout(() => setAPIResponseError(false), ms);
+  };
 
   const showAlertAboutError = (message) => {
     setAPIResponseError(message);
-    setTimeout(() => setAPIResponseError(false), 5000);
-  };
-
-  function todosFilter(status) {
-    if (status === "all") {
-      setFilterTodos(todos);
-    } else {
-      setFilterTodos(todos.filter((item) => item.done === status));
-    }
-    setCurrentPage(0);
-  }
-
-  const SetStates = (first, second) => {
-    setTodos(first);
-    setFilterTodos(second);
+    delay(5000);
   };
 
   const handlerRemoveTodo = (elem) => {
-    SetStates(
-      todos.filter((x) => x.uuid !== elem),
-      filterTodos.filter((x) => x.uuid !== elem)
-    );
     removeItemAPI(elem);
+    setTodos(todos.filter((x) => x !== elem));
   };
 
   const replaceElementField = (elem, field, value) => {
-    if (field === "isDone") {
+    if (field === "done") {
       elem.done = value;
     }
     if (field === "name") {
@@ -70,18 +64,16 @@ function App() {
   };
 
   const handlerChangeTodoCondition = (elem) => {
-    replaceElementField(elem, "isDone", !elem.done);
+    replaceElementField(elem, "done", !elem.done);
     todos[todos.indexOf(elem)] = elem;
-    filterTodos[todos.indexOf(elem)] = elem;
-    SetStates(todos.slice(0), filterTodos.slice(0));
+    setTodos(todos.slice(0));
     patchItemAPI(elem);
   };
 
   const handlerChangeTask = (elem, newText) => {
     replaceElementField(elem, "name", newText.slice(0));
     todos[todos.indexOf(elem)] = elem;
-    filterTodos[filterTodos.indexOf(elem)] = elem;
-    SetStates(todos.slice(0), filterTodos.slice(0));
+    setTodos(todos.slice(0));
     patchItemAPI(elem);
   };
 
@@ -93,8 +85,8 @@ function App() {
       });
   };
 
-  const removeItemAPI = (id) => {
-    axios.delete(`${sereverUrl}/task/${apiKey}/${id}`).catch((error) => {
+  const removeItemAPI = (elem) => {
+    axios.delete(`${sereverUrl}/task/${apiKey}/${elem.uuid}`).catch((error) => {
       showAlertAboutError(error.message);
     });
   };
@@ -112,23 +104,11 @@ function App() {
 
   const handlerNewElemSetter = (newElem) => {
     setItemAPI(newElem);
-    SetStates([...todos, newElem], [...filterTodos, newElem]);
+    setTodos([...todos, newElem]);
   };
 
   const handlerSetSortStatus = (sortStatus, filterBy) => {
-    if (filterBy === "all") {
-      filterBy = "";
-    }
-    axios
-      .get(
-        `${sereverUrl}/tasks/${apiKey}?filterBy=${filterBy}&order=${sortStatus}`
-      )
-      .then((response) => {
-        setFilterTodos(response.data);
-      })
-      .catch((error) => {
-        showAlertAboutError(error.message);
-      });
+    getItemsAPI(sortStatus, filterBy);
   };
 
   const IsUniqueName = (value) => {
@@ -164,7 +144,6 @@ function App() {
         </div>
 
         <Filter
-          todosFilter={(status) => todosFilter(status)}
           setSortStatus={(sortStatus, filterBy) =>
             handlerSetSortStatus(sortStatus, filterBy)
           }
@@ -172,11 +151,11 @@ function App() {
       </div>
       {!isLoaded ? (
         <TodoList
-          todos={filterTodos.slice(
+          todos={todos.slice(
             currentPage * todosPerPage,
             currentPage * todosPerPage + todosPerPage
           )}
-          removeTodo={(id) => handlerRemoveTodo(id)}
+          removeTodo={(uuid) => handlerRemoveTodo(uuid)}
           changeTodoCondition={(elem) => handlerChangeTodoCondition(elem)}
           changeTask={(elem, newText) => handlerChangeTask(elem, newText)}
         ></TodoList>
@@ -184,11 +163,11 @@ function App() {
         animatedLoader
       )}
 
-      {filterTodos.length > 0 && (
+      {todos.length > 0 && (
         <Paginate
           setCurrentPage={(value) => setCurrentPage(value)}
           currentPage={currentPage}
-          countTodoElem={filterTodos.length}
+          countTodoElem={todos.length}
           countElemPerPage={todosPerPage}
         ></Paginate>
       )}
