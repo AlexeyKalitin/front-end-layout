@@ -10,7 +10,7 @@ function TodoElement({ todo, removeTodo, changeTodoCondition, changeTask }) {
 
   const handleKeyDown = (e) => {
     e.target.className = "todo-list__input";
-    if (inputValue !== " " && inputValue !== "") {
+    if (inputValue[0] !== " " && inputValue !== "" && inputValue.length > 2 ) {
       if (e.key === "Enter") {
         changeTask(todo, inputValue);
         setIsEditable(false);
@@ -19,7 +19,7 @@ function TodoElement({ todo, removeTodo, changeTodoCondition, changeTask }) {
         setIsEditable(false);
       }
     } else {
-      e.target.className = "todo-list__input-error"; //ok?
+      e.target.className = "todo-list__input-error";
     }
   };
 

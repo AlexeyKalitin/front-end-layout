@@ -23,7 +23,6 @@ function App() {
 
   const getItemsAPI = (filterBy, sortStatus) => {
     setIsLoaded(true);
-    console.log(sortStatus, filterBy);
     if (filterBy === "all") {
       filterBy = "";
     }
