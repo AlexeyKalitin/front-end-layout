@@ -4,9 +4,9 @@ import React, { useState } from "react";
 function Input({ newElemSetter, nonExistYet }) {
   const [value, setValue] = useState("");
   const currentTime = new Date();
+
   const handleChange = (event) => {
-    clearRusSymb(event.target.value)
-    
+    clearRusSymb(event.target.value);
   };
 
   const getTime = () => {
@@ -16,16 +16,15 @@ function Input({ newElemSetter, nonExistYet }) {
   };
 
   const clearRusSymb = (string) => {
-    setValue(string.replace(/[А-Яа-я]/g,""))
+    setValue(string.replace(/[А-Яа-я]/g, ""));
   };
 
   const handlerOnKeyDown = (e) => {
-    
     if (
       value[0] !== " " &&
       value !== "" &&
       value.length > 2 &&
-      nonExistYet(value) 
+      nonExistYet(value)
     ) {
       if (e.key === "Enter") {
         console.log(value);

@@ -7,7 +7,6 @@ function Paginate({
   countTodoElem,
   countElemPerPage,
 }) {
- 
   const arr = [];
   let filterArr = [];
   const pageCount = countTodoElem / countElemPerPage;
@@ -63,7 +62,6 @@ function Paginate({
     } else return <div key={ind}></div>;
   });
 
-  
   return (
     <div className="paginate">
       <div className="paginate__button">

@@ -6,12 +6,13 @@ import { useState } from "react";
 
 function TodoElement({ todo, removeTodo, changeTodoCondition, changeTask }) {
   const [isEditable, setIsEditable] = useState(false);
+  const [inputValue, setInputValue] = useState("");
 
   const handleKeyDown = (e) => {
     e.target.className = "todo-list__input";
-    if (e.target.value[0] !== " " && e.target.value !== "") {
+    if (inputValue !== " " && inputValue !== "") {
       if (e.key === "Enter") {
-        changeTask(todo, e.target.value);
+        changeTask(todo, inputValue);
         setIsEditable(false);
       }
       if (e.key === "Escape") {
@@ -20,6 +21,14 @@ function TodoElement({ todo, removeTodo, changeTodoCondition, changeTask }) {
     } else {
       e.target.className = "todo-list__input-error"; //ok?
     }
+  };
+
+  const handleChange = (e) => {
+    clearRusSymb(e.target.value);
+  };
+
+  const clearRusSymb = (string) => {
+    setInputValue(string.replace(/[А-Яа-я]/g, ""));
   };
 
   const changingInput = (
@@ -31,6 +40,8 @@ function TodoElement({ todo, removeTodo, changeTodoCondition, changeTask }) {
       maxLength="16"
       defaultValue={todo.name}
       onKeyDown={handleKeyDown}
+      onChange={handleChange}
+      value={inputValue}
       className="todo-list__input"
     ></input>
   );
@@ -59,13 +70,21 @@ function TodoElement({ todo, removeTodo, changeTodoCondition, changeTask }) {
     </button>
   );
 
+  const currentDataWithoutRusSymb = () =>
+    todo.updatedAt.replace(/[A-Z]|(\.\d{3})/g, " ");
+
+  const makeInputEditable = () => {
+    setIsEditable(true);
+    setInputValue(todo.name);
+  };
+
   return (
     <li key={todo.key}>
       {changeConditionButton}
-      <span onClick={() => setIsEditable(true)} className="todo-list__text">
+      <span onClick={makeInputEditable} className="todo-list__text">
         {isEditable ? changingInput : <p>{todo.name}</p>}
       </span>
-      <p className="todo-list__date">{todo.updatedAt.replace(/[A-Z]|(\.\d{3})/g," ")}</p>
+      <p className="todo-list__date">{currentDataWithoutRusSymb()}</p>
       {removeTodoButton}
     </li>
   );

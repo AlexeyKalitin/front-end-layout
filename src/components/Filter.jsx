@@ -14,7 +14,7 @@ function Filter({ todosFilter, setSortStatus }) {
   const ButtonArrowDown = (
     <button
       onClick={() => {
-        setSortStatus("desc",activeFilterSort);
+        setSortStatus("desc", activeFilterSort);
       }}
       className={"filter__arrow-down"}
     >
@@ -25,7 +25,7 @@ function Filter({ todosFilter, setSortStatus }) {
   const ButtonArrowUp = (
     <button
       onClick={() => {
-        setSortStatus("asc",activeFilterSort);
+        setSortStatus("asc", activeFilterSort);
       }}
       className={"filter__arrow-up"}
     >

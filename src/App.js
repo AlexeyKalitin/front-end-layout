@@ -84,6 +84,7 @@ function App() {
     todos[todos.indexOf(elem)] = elem;
     filterTodos[filterTodos.indexOf(elem)] = elem;
     SetStates(todos.slice(0), filterTodos.slice(0));
+    patchItemAPI(elem);
   };
 
   const patchItemAPI = async (elem) => {
@@ -124,7 +125,7 @@ function App() {
       .get(
         `${sereverUrl}/tasks/${apiKey}?filterBy=${filterBy}&order=${sortStatus}`
       )
-      .then(response => {
+      .then((response) => {
         setFilterTodos(response.data);
       })
       .catch((error) => {
