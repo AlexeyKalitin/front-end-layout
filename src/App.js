@@ -31,9 +31,10 @@ function App() {
       .get(
         `${sereverUrl}/tasks/${apiKey}?filterBy=${filterBy}&order=${sortStatus}`
       )
+      .finally(setIsLoaded(false))
       .then((response) => {
         setTodos(response.data);
-        setIsLoaded(false);
+        setIsLoaded(false)
       })
       .catch((error) => {
         showAlertAboutError(error.message);
