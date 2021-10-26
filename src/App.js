@@ -5,6 +5,7 @@ import Filter from "./components/Filter";
 import Paginate from "./components/Paginate";
 import TodoList from "./components/TodoList";
 const axios = require("axios").default;
+const apiKey = process.env["REACT_APP_CLIENT_ID"];
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -18,7 +19,10 @@ function App() {
   useEffect(() => {
     const fetchTodos = async () => {
       setIsLoaded(true);
-      await axios.get(`${sereverUrl}/tasks/${process.env.REACT_APP_CLIENT_ID}`)
+      console.log(`${sereverUrl}/tasks/${apiKey}`);
+      console.log(apiKey);
+      await axios
+        .get(`${sereverUrl}/tasks/${apiKey}`)
         .then((response) => {
           setTodos(response.data);
           setFilterTodos(response.data);
@@ -84,28 +88,21 @@ function App() {
 
   const patchItemAPI = async (elem) => {
     await axios
-      .patch(
-        `${sereverUrl}/task/${process.env.REACT_APP_CLIENT_ID}/${elem.uuid}`,
-        elem
-      )
+      .patch(`${sereverUrl}/task/${apiKey}/${elem.uuid}`, elem)
       .catch((error) => {
         showAlertAboutError(error.message);
       });
-     
   };
 
   const removeItemAPI = async (id) => {
-    await axios
-      .delete(`${sereverUrl}/task/${process.env.REACT_APP_CLIENT_ID}/${id}`)
-      .catch((error) => {
-        showAlertAboutError(error.message);
-      });
-      
+    await axios.delete(`${sereverUrl}/task/${apiKey}/${id}`).catch((error) => {
+      showAlertAboutError(error.message);
+    });
   };
 
   const setItemAPI = async (item) => {
     await axios
-      .post(`${sereverUrl}/task/${process.env.REACT_APP_CLIENT_ID}`, item)
+      .post(`${sereverUrl}/task/${apiKey}`, item)
       .then((response) => {
         item.uuid = response.data.uuid;
       })
@@ -119,8 +116,20 @@ function App() {
     SetStates([...todos, newElem], [...filterTodos, newElem]);
   };
 
-  const handlerSetSortStatus = (sortStatus) => {
-   
+  const handlerSetSortStatus = async (sortStatus, filterBy) => {
+    if (filterBy === "all") {
+      filterBy = "";
+    }
+    await axios
+      .get(
+        `${sereverUrl}/tasks/${apiKey}?filterBy=${filterBy}&order=${sortStatus}`
+      )
+      .then(response => {
+        setFilterTodos(response.data);
+      })
+      .catch((error) => {
+        showAlertAboutError(error.message);
+      });
   };
 
   const IsUniqueName = (value) => {
@@ -133,13 +142,19 @@ function App() {
     </div>
   );
 
-
-  const animatedLoader = <div class="animated-loader"><div></div><div></div><div></div><div></div></div>
+  const animatedLoader = (
+    <div className="animated-loader">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  );
 
   return (
     <div className="conteiner">
       {showErrorWindow}
-      
+
       <div>
         <div className="todo">
           <h1>ToDo</h1>
@@ -151,10 +166,12 @@ function App() {
 
         <Filter
           todosFilter={(status) => todosFilter(status)}
-          setSortStatus={(sortStatus) => handlerSetSortStatus(sortStatus)}
+          setSortStatus={(sortStatus, filterBy) =>
+            handlerSetSortStatus(sortStatus, filterBy)
+          }
         />
       </div>
-      {!isLoaded ? 
+      {!isLoaded ? (
         <TodoList
           todos={filterTodos.slice(
             currentPage * todosPerPage,
@@ -164,10 +181,10 @@ function App() {
           changeTodoCondition={(elem) => handlerChangeTodoCondition(elem)}
           changeTask={(elem, newText) => handlerChangeTask(elem, newText)}
         ></TodoList>
-      
-      :animatedLoader
-      }
-      
+      ) : (
+        animatedLoader
+      )}
+
       {filterTodos.length > 0 && (
         <Paginate
           setCurrentPage={(value) => setCurrentPage(value)}

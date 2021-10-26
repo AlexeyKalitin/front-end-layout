@@ -7,6 +7,7 @@ function Paginate({
   countTodoElem,
   countElemPerPage,
 }) {
+ 
   const arr = [];
   let filterArr = [];
   const pageCount = countTodoElem / countElemPerPage;
