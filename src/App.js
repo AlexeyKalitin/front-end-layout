@@ -6,6 +6,7 @@ import Paginate from "./components/Paginate";
 import TodoList from "./components/TodoList";
 const axios = require("axios").default;
 const apiKey = process.env["REACT_APP_CLIENT_ID"];
+const sereverUrl = "https://todo-api-learning.herokuapp.com/v1";
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -14,14 +15,11 @@ function App() {
   const [filterTodos, setFilterTodos] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [todosPerPage] = useState(5);
-  const sereverUrl = "https://todo-api-learning.herokuapp.com/v1";
 
   useEffect(() => {
-    const fetchTodos = async () => {
+    const fetchTodos = () => {
       setIsLoaded(true);
-      console.log(`${sereverUrl}/tasks/${apiKey}`);
-      console.log(apiKey);
-      await axios
+      axios
         .get(`${sereverUrl}/tasks/${apiKey}`)
         .then((response) => {
           setTodos(response.data);
@@ -49,7 +47,7 @@ function App() {
     setCurrentPage(0);
   }
 
-  const SetStates = async (first, second) => {
+  const SetStates = (first, second) => {
     setTodos(first);
     setFilterTodos(second);
   };
@@ -87,22 +85,22 @@ function App() {
     patchItemAPI(elem);
   };
 
-  const patchItemAPI = async (elem) => {
-    await axios
+  const patchItemAPI = (elem) => {
+    axios
       .patch(`${sereverUrl}/task/${apiKey}/${elem.uuid}`, elem)
       .catch((error) => {
         showAlertAboutError(error.message);
       });
   };
 
-  const removeItemAPI = async (id) => {
-    await axios.delete(`${sereverUrl}/task/${apiKey}/${id}`).catch((error) => {
+  const removeItemAPI = (id) => {
+    axios.delete(`${sereverUrl}/task/${apiKey}/${id}`).catch((error) => {
       showAlertAboutError(error.message);
     });
   };
 
-  const setItemAPI = async (item) => {
-    await axios
+  const setItemAPI = (item) => {
+    axios
       .post(`${sereverUrl}/task/${apiKey}`, item)
       .then((response) => {
         item.uuid = response.data.uuid;
@@ -117,11 +115,11 @@ function App() {
     SetStates([...todos, newElem], [...filterTodos, newElem]);
   };
 
-  const handlerSetSortStatus = async (sortStatus, filterBy) => {
+  const handlerSetSortStatus = (sortStatus, filterBy) => {
     if (filterBy === "all") {
       filterBy = "";
     }
-    await axios
+    axios
       .get(
         `${sereverUrl}/tasks/${apiKey}?filterBy=${filterBy}&order=${sortStatus}`
       )
