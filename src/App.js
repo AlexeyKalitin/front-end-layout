@@ -6,7 +6,7 @@ import Paginate from "./components/Paginate";
 import TodoList from "./components/TodoList";
 const axios = require("axios").default;
 const apiKey = process.env["REACT_APP_CLIENT_ID"];
-const sereverUrl = "https://todo-api-learning.herokuapp.com/v1";
+const sereverUrl = process.env["REACT_APP_SERVER_URL"];;
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
