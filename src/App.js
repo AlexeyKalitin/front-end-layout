@@ -21,6 +21,11 @@ function App() {
     setIsLoaded(false);
   }, []);
 
+  useEffect(() => {
+    showAlertAboutError(APIResponseError);
+    setTimeout(() => setAPIResponseError(false), 4000);
+  }, [APIResponseError]);
+
   const getItemsAPI = (filterBy, sortStatus) => {
     setIsLoaded(true);
     if (filterBy === "all") {
@@ -36,17 +41,13 @@ function App() {
         setIsLoaded(false)
       })
       .catch((error) => {
-        showAlertAboutError(error.message);
+        setAPIResponseError(error.message);
       });
   };
 
-  const delay = (ms) => {
-    setTimeout(() => setAPIResponseError(false), ms);
-  };
-
-  const showAlertAboutError = (message) => {
-    setAPIResponseError(message);
-    delay(5000);
+ 
+  const showAlertAboutError = () => {
+    setAPIResponseError(APIResponseError);
   };
 
   const handlerRemoveTodo = (elem) => {
@@ -81,13 +82,13 @@ function App() {
     axios
       .patch(`${sereverUrl}/task/${apiKey}/${elem.uuid}`, elem)
       .catch((error) => {
-        showAlertAboutError(error.message);
+        setAPIResponseError(error.message);
       });
   };
 
   const removeItemAPI = (elem) => {
     axios.delete(`${sereverUrl}/task/${apiKey}/${elem.uuid}`).catch((error) => {
-      showAlertAboutError(error.message);
+      setAPIResponseError(error.message);
     });
   };
 
@@ -95,10 +96,14 @@ function App() {
     axios
       .post(`${sereverUrl}/task/${apiKey}`, item)
       .then((response) => {
+        if(!Object.keys(response.data).includes('uuid'))
+        {
+          setAPIResponseError("Object without uuid");
+        }else
         item.uuid = response.data.uuid;
       })
       .catch((error) => {
-        showAlertAboutError(error.message);
+        setAPIResponseError(error.message);
       });
   };
 

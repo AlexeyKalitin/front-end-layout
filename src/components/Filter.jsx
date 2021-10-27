@@ -1,5 +1,5 @@
 import "../style-modules/filter.module.css";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import arrowup from "../images/arrowup.svg";
 import arrowdown from "../images/arrowdown.svg";
 import FilterButton from "./filterButton";
@@ -7,32 +7,10 @@ import FilterButton from "./filterButton";
 function Filter({ setSortStatus }) {
   const [activeFilterSort, setActiveFilterSort] = useState("all");
   const [activeSortByDate, setActiveSortByDate] = useState("asc");
-  
+
   useEffect(() => {
     setSortStatus(activeFilterSort, activeSortByDate);
-  }, [activeFilterSort,activeSortByDate]);
-
-  const ButtonArrowDown = (
-    <button
-      onClick={() => {
-        setActiveSortByDate("desc");
-      }}
-      className={"filter__arrow-down"}
-    >
-      <img alt="arrowdown" src={arrowdown} />
-    </button>
-  );
-
-  const ButtonArrowUp = (
-    <button
-      onClick={() => {
-        setActiveSortByDate("asc");
-      }}
-      className={"filter__arrow-up"}
-    >
-      <img alt="arrowup" src={arrowup} />
-    </button>
-  );
+  }, [activeFilterSort, activeSortByDate]);
 
   return (
     <span className="filter">
@@ -55,8 +33,23 @@ function Filter({ setSortStatus }) {
       </span>
       <span className="filter-sort">
         <p className="sortBy-text">Sort by Date</p>
-        {ButtonArrowDown}
-        {ButtonArrowUp}
+        <button
+          onClick={() => {
+            setActiveSortByDate("desc");
+          }}
+          className={"filter__arrow-down"}
+        >
+          <img alt="arrowdown" src={arrowdown} />
+        </button>
+
+        <button
+          onClick={() => {
+            setActiveSortByDate("asc");
+          }}
+          className={"filter__arrow-up"}
+        >
+          <img alt="arrowup" src={arrowup} />
+        </button>
       </span>
     </span>
   );

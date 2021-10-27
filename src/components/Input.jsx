@@ -27,7 +27,6 @@ function Input({ newElemSetter, nonExistYet }) {
       nonExistYet(value)
     ) {
       if (e.key === "Enter") {
-        console.log(value);
         const newElem = {
           key: currentTime.getTime(),
           name: value,
