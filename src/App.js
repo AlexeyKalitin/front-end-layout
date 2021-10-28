@@ -4,48 +4,60 @@ import Input from "./components/Input";
 import Filter from "./components/Filter";
 import Paginate from "./components/Paginate";
 import TodoList from "./components/TodoList";
+import { Pagination } from "antd";
+
+import "antd/dist/antd.css";
 const axios = require("axios").default;
-const apiKey = process.env["REACT_APP_CLIENT_ID"];
-const sereverUrl = process.env["REACT_APP_SERVER_URL"];;
+const userID = process.env["REACT_APP_CLIENT_ID"];
+const sereverUrl = process.env["REACT_APP_SERVER_URL"];
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [APIResponseError, setAPIResponseError] = useState(false);
   const [todos, setTodos] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [todosPerPage] = useState(5);
 
   useEffect(() => {
     setIsLoaded(true);
-    getItemsAPI("all", "asc");
+    getItemsAPI("", "asc");
     setIsLoaded(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     showAlertAboutError(APIResponseError);
     setTimeout(() => setAPIResponseError(false), 4000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [APIResponseError]);
+
+  useEffect(() => {
+    if (
+      Math.ceil(todos.length / todosPerPage) < currentPage &&
+      currentPage > 1
+    ) {
+      setCurrentPage((prev) => prev - 1);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [todos.length]);
+
+  const queryString = (First, Second) =>
+    new URLSearchParams({ filterBy: First, order: Second }).toString();
 
   const getItemsAPI = (filterBy, sortStatus) => {
     setIsLoaded(true);
-    if (filterBy === "all") {
-      filterBy = "";
-    }
     axios
-      .get(
-        `${sereverUrl}/tasks/${apiKey}?filterBy=${filterBy}&order=${sortStatus}`
-      )
-      .finally(setIsLoaded(false))
+      .get(`${sereverUrl}/tasks/${userID}?${queryString(filterBy, sortStatus)}`)
       .then((response) => {
         setTodos(response.data);
-        setIsLoaded(false)
+        setIsLoaded(false);
       })
       .catch((error) => {
-        setAPIResponseError(error.message);
-      });
+        setAPIResponseError(error.response.data.message);
+      })
+      .finally(setIsLoaded(false));
   };
 
- 
   const showAlertAboutError = () => {
     setAPIResponseError(APIResponseError);
   };
@@ -80,30 +92,28 @@ function App() {
 
   const patchItemAPI = (elem) => {
     axios
-      .patch(`${sereverUrl}/task/${apiKey}/${elem.uuid}`, elem)
+      .patch(`${sereverUrl}/task/${userID}/${elem.uuid}`, elem)
       .catch((error) => {
-        setAPIResponseError(error.message);
+        setAPIResponseError(error.response.data.message);
       });
   };
 
   const removeItemAPI = (elem) => {
-    axios.delete(`${sereverUrl}/task/${apiKey}/${elem.uuid}`).catch((error) => {
-      setAPIResponseError(error.message);
+    axios.delete(`${sereverUrl}/task/${userID}/${elem.uuid}`).catch((error) => {
+      setAPIResponseError(error.response.data.message);
     });
   };
 
   const setItemAPI = (item) => {
     axios
-      .post(`${sereverUrl}/task/${apiKey}`, item)
+      .post(`${sereverUrl}/task/${userID}`, item)
       .then((response) => {
-        if(!Object.keys(response.data).includes('uuid'))
-        {
+        if (!Object.keys(response.data).includes("uuid")) {
           setAPIResponseError("Object without uuid");
-        }else
-        item.uuid = response.data.uuid;
+        } else item.uuid = response.data.uuid;
       })
       .catch((error) => {
-        setAPIResponseError(error.message);
+        setAPIResponseError(error.response.data.message);
       });
   };
 
@@ -134,11 +144,12 @@ function App() {
       <div></div>
     </div>
   );
-
+  const changeCurrentPage = (page, pageSize) => {
+    setCurrentPage(page);
+  };
   return (
     <div className="conteiner">
       {showErrorWindow}
-
       <div>
         <div className="todo">
           <h1>ToDo</h1>
@@ -157,8 +168,8 @@ function App() {
       {!isLoaded ? (
         <TodoList
           todos={todos.slice(
-            currentPage * todosPerPage,
-            currentPage * todosPerPage + todosPerPage
+            (currentPage - 1) * todosPerPage,
+            currentPage * todosPerPage
           )}
           removeTodo={(uuid) => handlerRemoveTodo(uuid)}
           changeTodoCondition={(elem) => handlerChangeTodoCondition(elem)}
@@ -167,15 +178,16 @@ function App() {
       ) : (
         animatedLoader
       )}
-
-      {todos.length > 0 && (
-        <Paginate
-          setCurrentPage={(value) => setCurrentPage(value)}
-          currentPage={currentPage}
-          countTodoElem={todos.length}
-          countElemPerPage={todosPerPage}
-        ></Paginate>
-      )}
+      <Pagination
+      size="default"
+        className="ant-pagination paginate"
+        current={currentPage}
+        total={todos.length}
+        hideOnSinglePage
+        pageSize={todosPerPage}
+        onChange={(page, pageSize) => changeCurrentPage(page, pageSize)}
+      />
+      
     </div>
   );
 }

@@ -13,7 +13,7 @@
 }
 .animated-loader div {
   box-sizing: border-box;
-  
+
   position: absolute;
   width: 64px;
   height: 64px;
@@ -39,7 +39,6 @@
     transform: rotate(360deg);
   }
 }
-
 
 .alert-about-error {
   position: absolute;
@@ -83,27 +82,13 @@ body {
   justify-content: center;
   align-items: center;
 }
-@media screen and (device-width: 1000px) {
-  .todo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    min-width: 60vw;
-  }
-  li {
-    display: flex;
-    justify-content: space-between;
-    border: 2px solid #212529;
-    margin-top: 10px;
-    min-width: 40vw;
-    height: 8vh;
-    border-radius: 1rem;
-  }
+.ant-checkbox-inner::after {
+  width: 50px;
+  height: 50px;
 }
 .conteiner {
   min-width: 50vw;
-  min-height: 98vh;
+  min-height: 75vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -246,11 +231,14 @@ body {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  max-height: 50vh;
-  min-height: 50vh;
+  max-height: 30vh;
+  min-height: 30vh;
   min-width: 35vw;
 }
-
+.ant-pagination {
+  width: 40vw;
+  flex-direction: row;
+}
 .filter-sort {
   display: flex;
   flex-direction: row;
@@ -267,11 +255,10 @@ ul {
 li {
   display: flex;
   justify-content: space-between;
-  border: 2px solid #212529;
+  align-items: center;
+  border: 1px solid #212529;
   margin-top: 10px;
   width: 40vw;
-  height: 8vh;
-  border-radius: 1rem;
 }
 
 .todo-list__text {
@@ -280,6 +267,9 @@ li {
   align-items: center;
   font-size: 1.6rem;
   min-width: 13vw;
+}
+p {
+  margin: 0;
 }
 
 .todo-list__input {
@@ -298,19 +288,8 @@ li {
 }
 
 .todo-list__button {
-  -webkit-transition-duration: 0.4s;
-  transition-duration: 0.4s;
-  background-color: white;
-  border: none;
-  cursor: pointer;
-  max-width: 3rem;
-  margin-right: 2rem;
-  border-top-left-radius: 0.85rem;
-  border-bottom-left-radius: 0.85rem;
-}
-
-.todo-list__button:hover {
-  filter: invert(100%);
+  width: 20px;
+  height: 20px;
 }
 
 .todo-list__trashbin {

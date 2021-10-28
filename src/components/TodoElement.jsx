@@ -3,14 +3,16 @@ import undone from "../images/undone.svg";
 import trashbin from "../images/trash.svg";
 import done from "../images/icon.svg";
 import { useState } from "react";
+import { Button, Checkbox } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
+import "antd/dist/antd.css";
 
 function TodoElement({ todo, removeTodo, changeTodoCondition, changeTask }) {
   const [isEditable, setIsEditable] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
   const handleKeyDown = (e) => {
-    e.target.className = "todo-list__input";
-    if (inputValue[0] !== " " && inputValue !== "" && inputValue.length > 2 ) {
+    if (inputValue[0] !== " " && inputValue !== "" && inputValue.length > 2) {
       if (e.key === "Enter") {
         changeTask(todo, inputValue);
         setIsEditable(false);
@@ -18,8 +20,6 @@ function TodoElement({ todo, removeTodo, changeTodoCondition, changeTask }) {
       if (e.key === "Escape") {
         setIsEditable(false);
       }
-    } else {
-      e.target.className = "todo-list__input-error";
     }
   };
 
@@ -46,31 +46,7 @@ function TodoElement({ todo, removeTodo, changeTodoCondition, changeTask }) {
     ></input>
   );
 
-  const changeConditionButton = (
-    <button
-      onClick={() => changeTodoCondition(todo)}
-      title="done"
-      className="todo-list__button"
-    >
-      <img
-        alt="undone"
-        src={todo.done === false ? undone : done}
-        className="todo-list__picture"
-      />
-    </button>
-  );
-
-  const removeTodoButton = (
-    <button
-      onClick={() => removeTodo(todo)}
-      title="delete"
-      className="todo-list__trashbin"
-    >
-      <img alt="delete" src={trashbin} />
-    </button>
-  );
-
-  const currentDataWithoutRusSymb = () =>
+  const currentDataWithoutSymb = () =>
     todo.updatedAt.replace(/[A-Z]|(\.\d{3})/g, " ");
 
   const makeInputEditable = () => {
@@ -80,12 +56,17 @@ function TodoElement({ todo, removeTodo, changeTodoCondition, changeTask }) {
 
   return (
     <li key={todo.key}>
-      {changeConditionButton}
+      <Checkbox onClick={() => changeTodoCondition(todo)} checked={todo.done} />
       <span onClick={makeInputEditable} className="todo-list__text">
         {isEditable ? changingInput : <p>{todo.name}</p>}
       </span>
-      <p className="todo-list__date">{currentDataWithoutRusSymb()}</p>
-      {removeTodoButton}
+      <p className="todo-list__date">{currentDataWithoutSymb()}</p>
+      <Button
+        size="large"
+        danger
+        onClick={() => removeTodo(todo)}
+        icon={<DeleteOutlined />}
+      />
     </li>
   );
 }

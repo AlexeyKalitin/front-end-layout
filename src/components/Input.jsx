@@ -12,7 +12,7 @@ function Input({ newElemSetter, nonExistYet }) {
   const getTime = () => {
     return `${currentTime.getFullYear()}-${currentTime.getMonth() + 1}-${
       currentTime.getDay() + 24
-    } ${currentTime.getHours()}:${currentTime.getMinutes()}:${currentTime.getSeconds()}`;
+    } ${currentTime.getHours()-3}:${currentTime.getMinutes()}:${currentTime.getSeconds()}`;
   };
 
   const clearRusSymb = (string) => {

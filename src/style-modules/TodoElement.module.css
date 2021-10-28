@@ -3,24 +3,14 @@
   max-width: 13vw;
 }
 
-
-@media screen and (device-width: 1000px) {
-  .todo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    min-width: 60vw;
-  }
-  li {
-    display: flex;
-    justify-content: space-between;
-    border: 2px solid #212529;
-    margin-top: 10px;
-    min-width: 40vw;
-    height: 8vh;
-    border-radius: 1rem;
-  }
+.ant-checkbox-inner{
+  width: 200px;
+  height: 16px;
+}
+.ant-checkbox-checked .ant-checkbox-inner::after {
+  transform: rotate(45deg) scale(1) translate(-50%, -50%);
+  -webkit-transform: rotate(45deg) scale(1) translate(-50%, -50%);
+  -ms-transform: rotate(45deg) scale(1) translate(-50%, -50%);
 }
 .todo-list__input-error {
   font-size: 1.6rem;
@@ -35,14 +25,10 @@
   border: none;
   cursor: pointer;
   max-width: 3rem;
-  margin-right: 2rem;
-  border-top-left-radius: 0.85rem;
-  border-bottom-left-radius: 0.85rem;
+  width: 2rem;
 }
 
-.todo-list__button:hover {
-  filter: invert(100%);
-}
+
 .todo-list__text {
   display: flex;
   justify-content: center;

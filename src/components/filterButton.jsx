@@ -6,7 +6,9 @@ function FilterButton({ text, setActiveFilterSort, activeFilterSort }) {
       onClick={() => {
         setActiveFilterSort(text);
       }}
-      className={activeFilterSort === text?"filter__button-active":"filter__button"}
+      className={
+        activeFilterSort === text ? "filter__button-active" : "filter__button"
+      }
     >
       {text}
     </button>

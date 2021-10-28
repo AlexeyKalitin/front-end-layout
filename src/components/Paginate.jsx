@@ -10,7 +10,7 @@ function Paginate({
   const arr = [];
   let filterArr = [];
   const pageCount = countTodoElem / countElemPerPage;
-  const maxPaginateButtons = 9;
+  const maxPaginateButtons = 8;
 
   for (let i = 1; i < pageCount + 1; i++) {
     arr.push(i);

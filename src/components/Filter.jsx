@@ -1,55 +1,53 @@
 import "../style-modules/filter.module.css";
 import React, { useState, useEffect } from "react";
-import arrowup from "../images/arrowup.svg";
-import arrowdown from "../images/arrowdown.svg";
-import FilterButton from "./filterButton";
+import { Button, Radio } from "antd";
+import { DownOutlined, UpOutlined } from "@ant-design/icons";
+import "antd/dist/antd.css";
 
 function Filter({ setSortStatus }) {
-  const [activeFilterSort, setActiveFilterSort] = useState("all");
+  const [activeFilterSort, setActiveFilterSort] = useState("");
   const [activeSortByDate, setActiveSortByDate] = useState("asc");
 
   useEffect(() => {
     setSortStatus(activeFilterSort, activeSortByDate);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeFilterSort, activeSortByDate]);
 
+  const buttonOptions = [
+    { label: "all", value: "" },
+    { label: "done", value: "done" },
+    { label: "undone", value: "undone" },
+  ];
+
+  const changeFilterSort = (e) => {
+    console.log(e.target.value);
+    setActiveFilterSort(e.target.value);
+  };
   return (
     <span className="filter">
-      <span className="filter-buttons">
-        <FilterButton
-          text="all"
-          setActiveFilterSort={setActiveFilterSort}
-          activeFilterSort={activeFilterSort}
-        ></FilterButton>
-        <FilterButton
-          text="done"
-          setActiveFilterSort={setActiveFilterSort}
-          activeFilterSort={activeFilterSort}
-        ></FilterButton>
-        <FilterButton
-          text="undone"
-          setActiveFilterSort={setActiveFilterSort}
-          activeFilterSort={activeFilterSort}
-        ></FilterButton>
-      </span>
+        <Radio.Group
+          size="large"
+          options={buttonOptions}
+          onChange={changeFilterSort}
+          value={activeFilterSort}
+          optionType="button"
+          buttonStyle="solid"
+        />
       <span className="filter-sort">
         <p className="sortBy-text">Sort by Date</p>
-        <button
+        <Button
           onClick={() => {
             setActiveSortByDate("desc");
           }}
-          className={"filter__arrow-down"}
-        >
-          <img alt="arrowdown" src={arrowdown} />
-        </button>
+          icon={<DownOutlined />}
+        ></Button>
 
-        <button
+        <Button
           onClick={() => {
             setActiveSortByDate("asc");
           }}
-          className={"filter__arrow-up"}
-        >
-          <img alt="arrowup" src={arrowup} />
-        </button>
+          icon={<UpOutlined />}
+        ></Button>
       </span>
     </span>
   );

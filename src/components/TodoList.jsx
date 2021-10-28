@@ -1,8 +1,7 @@
 import "../style-modules/TodoList.module.css";
 import TodosElement from "./TodoElement";
 
-function TodoList( { todos, removeTodo, changeTodoCondition, changeTask }) {
-
+function TodoList({ todos, removeTodo, changeTodoCondition, changeTask }) {
   if (todos.length === 0) {
     return <h1 style={{ marginTop: "2vw" }}>Nothing...</h1>;
   } else {
