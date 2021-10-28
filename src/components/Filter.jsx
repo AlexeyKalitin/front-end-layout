@@ -18,21 +18,19 @@ function Filter({ setSortStatus }) {
     { label: "done", value: "done" },
     { label: "undone", value: "undone" },
   ];
-
   const changeFilterSort = (e) => {
-    console.log(e.target.value);
     setActiveFilterSort(e.target.value);
   };
   return (
     <span className="filter">
-        <Radio.Group
-          size="large"
-          options={buttonOptions}
-          onChange={changeFilterSort}
-          value={activeFilterSort}
-          optionType="button"
-          buttonStyle="solid"
-        />
+      <Radio.Group
+        size="large"
+        options={buttonOptions}
+        onChange={changeFilterSort}
+        value={activeFilterSort}
+        optionType="button"
+        buttonStyle="solid"
+      />
       <span className="filter-sort">
         <p className="sortBy-text">Sort by Date</p>
         <Button

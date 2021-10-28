@@ -166,6 +166,7 @@ function App() {
           }
         />
       </div>
+      <div className="items-list">
       {!isLoaded ? (
         <TodoList
           todos={todos.slice(
@@ -180,7 +181,7 @@ function App() {
         animatedLoader
       )}
       <Pagination
-        size="default"
+        size="large"
         className="ant-pagination paginate"
         current={currentPage}
         total={todos.length}
@@ -188,6 +189,7 @@ function App() {
         pageSize={todosPerPage}
         onChange={(page, pageSize) => changeCurrentPage(page, pageSize)}
       />
+    </div>
     </div>
   );
 }

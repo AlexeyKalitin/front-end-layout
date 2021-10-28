@@ -34,7 +34,7 @@ function TodoElement({ todo, removeTodo, changeTodoCondition, changeTask }) {
         setIsEditable(false);
       }}
       autoFocus
-      maxLength="16"
+      maxLength="25"
       defaultValue={todo.name}
       onKeyDown={handleKeyDown}
       onChange={handleChange}
@@ -55,7 +55,19 @@ function TodoElement({ todo, removeTodo, changeTodoCondition, changeTask }) {
     <li key={todo.key}>
       <Checkbox onClick={() => changeTodoCondition(todo)} checked={todo.done} />
       <span onClick={makeInputEditable} className="todo-list__text">
-        {isEditable ? changingInput : <p style={todo.done?{textDecoration:"line-through"}:{}}>{todo.name}</p>}
+        {isEditable ? (
+          changingInput
+        ) : (
+          <p
+            style={
+              todo.done
+                ? { color: "black", textDecoration: "line-through" }
+                : { color: "black" }
+            }
+          >
+            {todo.name}
+          </p>
+        )}
       </span>
       <p className="todo-list__date">{currentDataWithoutSymb()}</p>
       <Button

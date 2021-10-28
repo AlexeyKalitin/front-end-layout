@@ -49,7 +49,7 @@ function MyInput({ newElemSetter, nonExistYet }) {
         onChange={handleChange}
         placeholder="Type task"
         autoFocus
-        maxLength="16"
+        maxLength="25"
         className="todo__text"
       />
     </div>
