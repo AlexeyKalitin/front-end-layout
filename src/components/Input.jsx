@@ -1,7 +1,10 @@
 import "../style-modules/Input.module.css";
+import 'antd/dist/antd.css';
+import { UserOutlined } from '@ant-design/icons';
+import { Input } from 'antd';
 import React, { useState } from "react";
 
-function Input({ newElemSetter, nonExistYet }) {
+function MyInput({ newElemSetter, nonExistYet }) {
   const [value, setValue] = useState("");
   const currentTime = new Date();
 
@@ -41,7 +44,7 @@ function Input({ newElemSetter, nonExistYet }) {
 
   return (
     <div className="input">
-      <input
+      <Input
         onKeyDown={handlerOnKeyDown}
         value={value}
         onChange={handleChange}
@@ -54,4 +57,4 @@ function Input({ newElemSetter, nonExistYet }) {
   );
 }
 
-export default Input;
+export default MyInput;

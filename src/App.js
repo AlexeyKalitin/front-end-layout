@@ -1,6 +1,6 @@
 import "./style-modules/style.css";
 import React, { useState, useEffect } from "react";
-import Input from "./components/Input";
+import MyInput from "./components/Input";
 import Filter from "./components/Filter";
 import Paginate from "./components/Paginate";
 import TodoList from "./components/TodoList";
@@ -153,7 +153,7 @@ function App() {
       <div>
         <div className="todo">
           <h1>ToDo</h1>
-          <Input
+          <MyInput
             newElemSetter={(newElem) => handlerNewElemSetter(newElem)}
             nonExistYet={(value) => IsUniqueName(value)}
           />

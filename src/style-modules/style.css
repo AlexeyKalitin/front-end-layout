@@ -98,12 +98,10 @@ body {
   border-radius: 3rem;
 }
 
-.todo__text {
-  width: 40vw;
-  height: 3rem;
-  border: 2px solid black;
-  border-radius: 0.5rem;
-  font-size: 2rem;
+
+.ant-input.todo__text{width: 40vw;
+  font-size: 1.4rem;
+
 }
 
 .todo__text-error {
