@@ -1,7 +1,4 @@
 import "../style-modules/TodoElement.module.css";
-import undone from "../images/undone.svg";
-import trashbin from "../images/trash.svg";
-import done from "../images/icon.svg";
 import { useState } from "react";
 import { Button, Checkbox } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
@@ -58,7 +55,7 @@ function TodoElement({ todo, removeTodo, changeTodoCondition, changeTask }) {
     <li key={todo.key}>
       <Checkbox onClick={() => changeTodoCondition(todo)} checked={todo.done} />
       <span onClick={makeInputEditable} className="todo-list__text">
-        {isEditable ? changingInput : <p>{todo.name}</p>}
+        {isEditable ? changingInput : <p style={todo.done?{textDecoration:"line-through"}:{}}>{todo.name}</p>}
       </span>
       <p className="todo-list__date">{currentDataWithoutSymb()}</p>
       <Button

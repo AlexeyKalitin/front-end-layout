@@ -2,7 +2,6 @@ import "./style-modules/style.css";
 import React, { useState, useEffect } from "react";
 import MyInput from "./components/Input";
 import Filter from "./components/Filter";
-import Paginate from "./components/Paginate";
 import TodoList from "./components/TodoList";
 import { Pagination } from "antd";
 
@@ -19,15 +18,13 @@ function App() {
   const [todosPerPage] = useState(5);
 
   useEffect(() => {
-    setIsLoaded(true);
     getItemsAPI("", "asc");
-    setIsLoaded(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     showAlertAboutError(APIResponseError);
-    setTimeout(() => setAPIResponseError(false), 4000);
+    setTimeout(() => setAPIResponseError(false), 5000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [APIResponseError]);
 
@@ -50,10 +47,9 @@ function App() {
       .get(`${sereverUrl}/tasks/${userID}?${queryString(filterBy, sortStatus)}`)
       .then((response) => {
         setTodos(response.data);
-        setIsLoaded(false);
       })
       .catch((error) => {
-        setAPIResponseError(error.response.data.message);
+        setAPIResponseError(error.message);
       })
       .finally(setIsLoaded(false));
   };
@@ -91,16 +87,20 @@ function App() {
   };
 
   const patchItemAPI = (elem) => {
+    setIsLoaded(true);
     axios
       .patch(`${sereverUrl}/task/${userID}/${elem.uuid}`, elem)
       .catch((error) => {
-        setAPIResponseError(error.response.data.message);
+        setAPIResponseError(error.message);
+      })
+      .finally(() => {
+        setIsLoaded(false);
       });
   };
 
   const removeItemAPI = (elem) => {
     axios.delete(`${sereverUrl}/task/${userID}/${elem.uuid}`).catch((error) => {
-      setAPIResponseError(error.response.data.message);
+      setAPIResponseError(error.message);
     });
   };
 
@@ -113,7 +113,7 @@ function App() {
         } else item.uuid = response.data.uuid;
       })
       .catch((error) => {
-        setAPIResponseError(error.response.data.message);
+        setAPIResponseError(error.message);
       });
   };
 
@@ -124,6 +124,7 @@ function App() {
 
   const handlerSetSortStatus = (sortStatus, filterBy) => {
     getItemsAPI(sortStatus, filterBy);
+    setCurrentPage(1);
   };
 
   const IsUniqueName = (value) => {
@@ -179,7 +180,7 @@ function App() {
         animatedLoader
       )}
       <Pagination
-      size="default"
+        size="default"
         className="ant-pagination paginate"
         current={currentPage}
         total={todos.length}
@@ -187,7 +188,6 @@ function App() {
         pageSize={todosPerPage}
         onChange={(page, pageSize) => changeCurrentPage(page, pageSize)}
       />
-      
     </div>
   );
 }

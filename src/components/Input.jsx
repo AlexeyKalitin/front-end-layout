@@ -1,6 +1,5 @@
 import "../style-modules/Input.module.css";
 import 'antd/dist/antd.css';
-import { UserOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
 import React, { useState } from "react";
 

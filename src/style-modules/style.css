@@ -39,8 +39,16 @@
     transform: rotate(360deg);
   }
 }
-
+.text-error{
+  font-size: 1rem;
+}
 .alert-about-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 400px;
+  height: 70px;
   position: absolute;
   bottom: 20px;
   border: 3px solid black;
@@ -48,24 +56,24 @@
   left: 20px;
   border-radius: 2rem;
   padding: 5px;
-  color: rgb(214, 11, 11);
   opacity: 0;
-  transition: 0.8s;
-  animation: show 1s 1;
+  transition: 0.3s;
+  animation: show 5s 1;
   animation-fill-mode: forwards;
+  overflow: hidden;
 }
 @keyframes show {
   0% {
     opacity: 0;
   }
   25% {
-    opacity: 0.25;
-  }
-  50% {
     opacity: 0.5;
   }
-  100% {
+  50% {
     opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
   }
 }
 
