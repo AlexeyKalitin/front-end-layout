@@ -7,7 +7,7 @@ const todos = [{ id: 1, title: 'buy the milk' }, { id: 2, title: 'rent a car' },
 const count = todos.length;
 
 app.use(bodyParser);
-
+const todoModel=require('../models/todo')
 app.get('/', (request, response) => response.status(200).json(todos));
 
 app.post('/', (request, response) => {
