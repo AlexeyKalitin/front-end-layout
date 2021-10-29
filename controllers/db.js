@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird');
 const db = mongoose.connection
+const List = require('../models');
 
 db.serialize(() => {
   const sql = 'CREATE TABLE IF NOT EXISTS todos (id integer primary key, title)';

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
-const TodoModelSchema = new Schema({
+
+const todoModelSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -18,4 +19,10 @@ const TodoModelSchema = new Schema({
         required: true,
     }
 })
-module.exports = new mongoose.model('TodoModel', TodoModelSchema);
+
+const listSchema = mongoose.Schema({
+    tasks: [todoModelSchema],
+});
+
+let List = new mongoose.model('List', listSchema);
+module.exports = List;
