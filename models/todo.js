@@ -1,28 +1,29 @@
+
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
+const { v4: uuidv4 } = require('uuid');
 
 const todoModelSchema = new Schema({
     name: {
         type: String,
         required: true,
     },
-    created_at: {
+    createdAt: {
         type: Date,
-        required: true,
-    },
-    id: {
-        type: Number,
-        required: true,
+        default:Date.now,
     },
     done: {
         type: Boolean,
-        required: true,
+        default:false,
+        required: true
+    },
+    uuid:{
+        type: String,
+        default: uuidv4,
     }
-})
+},
+{ versionKey: false }
+)
 
-const listSchema = mongoose.Schema({
-    tasks: [todoModelSchema],
-});
-
-let List = new mongoose.model('List', listSchema);
-module.exports = List;
+const list = new mongoose.model('list', todoModelSchema);
+module.exports = list;
