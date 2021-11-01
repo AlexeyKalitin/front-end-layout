@@ -1,15 +1,12 @@
+const dotenv = require('dotenv');
+dotenv.config();
 const express = require("express");
-const PORT = 3000;
-const app = express();
+const { PORT } = require('./config');
 const bodyParser = require("body-parser");
+const app = express();
 app.use(bodyParser.json());
-
-const todoRoutes  = require('./routes/index');
-
-
+const todoRoutes = require('./routes/index');
 app.use("", todoRoutes);
-
-
 
 app.use((err, req, res, next) => {
   return res.status(err.status || 400).json({
@@ -19,6 +16,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  // listening on port 3000
-  console.log(`listening on port ${PORT}`); // print this when the server starts
+  console.log(`listening on port ${PORT}`);
 });
