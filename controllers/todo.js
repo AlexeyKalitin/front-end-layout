@@ -7,6 +7,7 @@ function success(res, payload) {
 exports.getTodos = async (req, res, next) => {
   try {
     const todos = await db.list.find({});
+    
     return success(res, todos);
   } catch (err) {
     next({ status: 400, message: "failed to get todos" });
