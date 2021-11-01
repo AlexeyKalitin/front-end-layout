@@ -7,7 +7,6 @@ function success(res, payload) {
 exports.getTodos = async (req, res, next) => {
   try {
     let filterBy = req.query.filterBy;
-    console.log(filterBy)
     const order = req.query.order;
     switch (filterBy) {
       case "all":
