@@ -4,4 +4,4 @@ mongoose.connect(mongoDbUrl);
 mongoose.set('debug', true);
 mongoose.Promise = Promise;
 
-module.exports.list = require("./todo");
+module.exports.listTodos = require("./todo.model");
