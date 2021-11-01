@@ -12,4 +12,5 @@ UserPassword="Qwerty12345"
 
 
 npm install
+
 npm start
