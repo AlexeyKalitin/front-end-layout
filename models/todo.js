@@ -10,7 +10,7 @@ const todoModelSchema = new Schema({
     },
     createdAt: {
         type: Date,
-        default:Date.now,
+        default:() => Date.now(),
     },
     done: {
         type: Boolean,
