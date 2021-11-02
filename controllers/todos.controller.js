@@ -18,7 +18,6 @@ exports.getAllTodos = async (req, res, next) => {
       case "undone":
         filterBy = false
         break;
-      default:
     }
     let todos = await db.listTodos
       .find(filterBy === null || filterBy === undefined ? {} : { done: filterBy })
