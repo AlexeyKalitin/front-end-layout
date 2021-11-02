@@ -44,6 +44,7 @@ exports.putOneTodo = async (req, res, next) => {
       { uuid: req.params.id },
       req.body
     );
+    console.log(todo)
     if (!todo) return next({ status: 404, message: "failed to updated todo" });
     return success(res, "todo updated");
   } catch (err) {
