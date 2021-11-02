@@ -4,7 +4,7 @@ function success(res, payload) {
   return res.status(200).json(payload);
 }
 
-exports.getTodos = async (req, res, next) => {
+exports.getAllTodos = async (req, res, next) => {
   try {
     let filterBy = req.query.filterBy;
     console.log(filterBy)
@@ -19,7 +19,6 @@ exports.getTodos = async (req, res, next) => {
       case "undone":
         filterBy = false
         break;
-      default:
     }
     let todos = await db.listTodos
       .find(filterBy === null || filterBy === undefined ? {} : { done: filterBy })
@@ -30,7 +29,7 @@ exports.getTodos = async (req, res, next) => {
   }
 };
 
-exports.postTodo = async (req, res, next) => {
+exports.postOneTodo = async (req, res, next) => {
   try {
     const todo = await db.listTodos.create(req.body);
     if (!todo) return next({ status: 404, message: "failed to post todo" });
@@ -40,7 +39,7 @@ exports.postTodo = async (req, res, next) => {
   }
 };
 
-exports.putTodo = async (req, res, next) => {
+exports.putOneTodo = async (req, res, next) => {
   try {
     const todo = await db.listTodos.findOneAndUpdate(
       { uuid: req.params.id },
@@ -53,7 +52,7 @@ exports.putTodo = async (req, res, next) => {
   }
 };
 
-exports.deleteTodo = async (req, res, next) => {
+exports.deleteOneTodo = async (req, res, next) => {
   try {
     const deletedTodo = await db.listTodos.findOneAndDelete({ uuid: req.params.id });
     console.log(deletedTodo)
