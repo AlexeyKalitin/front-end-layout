@@ -2,19 +2,13 @@ import "../style-modules/Input.module.css";
 import 'antd/dist/antd.css';
 import { Input } from 'antd';
 import React, { useState } from "react";
-
+const date = new Date();
 function MyInput({ newElemSetter, nonExistYet }) {
   const [value, setValue] = useState("");
   const currentTime = new Date();
 
   const handleChange = (event) => {
     clearRusSymb(event.target.value);
-  };
-
-  const getTime = () => {
-    return `${currentTime.getFullYear()}-${currentTime.getMonth() + 1}-${
-      currentTime.getDay() + 24
-    } ${currentTime.getHours()-3}:${currentTime.getMinutes()}:${currentTime.getSeconds()}`;
   };
 
   const clearRusSymb = (string) => {
@@ -32,8 +26,8 @@ function MyInput({ newElemSetter, nonExistYet }) {
         const newElem = {
           key: currentTime.getTime(),
           name: value,
-          done: false,
-          updatedAt: getTime(),
+          isDone: false,
+          updatedAt: date.toISOString(),
         };
         setValue("");
         newElemSetter(newElem);
