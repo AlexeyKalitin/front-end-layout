@@ -32,7 +32,7 @@ function Filter({ setSortStatus }) {
         buttonStyle="solid"
       />
       <span className="filter-sort">
-        <p className="sortBy-text">Sort by Date</p>
+        <div className="sortBy-text">Sort by Date</div>
         <Button
           onClick={() => {
             setActiveSortByDate("desc");

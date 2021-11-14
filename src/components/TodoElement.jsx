@@ -42,7 +42,13 @@ function TodoElement({ todo, removeTodo, changeTodoCondition, changeTask }) {
 			className='todo-list__input'></input>
 	)
 
-	const currentDataWithoutSymb = () => todo.updatedAt.replace(/[A-Z]|(\.\d{3})/g, ' ')
+	const currentDataWithoutSymb = todo => {
+		try {
+			return todo.updatedAt.replace(/[A-Z]|(\.\d{3})/g, ' ')
+		} catch (e) {
+			console.log(e.message)
+		}
+	}
 
 	const makeInputEditable = () => {
 		setIsEditable(true)
@@ -51,15 +57,15 @@ function TodoElement({ todo, removeTodo, changeTodoCondition, changeTask }) {
 
 	return (
 		<li key={todo.key}>
-			<Checkbox onClick={() => changeTodoCondition(todo)} checked={todo.isDone} />
+			<Checkbox style={{ boxShadow: '2px 2px 20px gray' }} onClick={() => changeTodoCondition(todo)} checked={todo.isDone} />
 			<span onClick={makeInputEditable} className='todo-list__text'>
 				{isEditable ? (
 					changingInput
 				) : (
-					<p style={todo.isDone ? { color: 'black', textDecoration: 'line-through' } : { color: 'black' }}>{todo.name}</p>
+					<div style={todo.isDone ? { color: 'black', textDecoration: 'line-through' } : { color: 'black' }}>{todo.name}</div>
 				)}
 			</span>
-			<p className='todo-list__date'>{currentDataWithoutSymb()}</p>
+			<div className='todo-list__date'>{currentDataWithoutSymb(todo)}</div>
 			<Button size='large' danger='true' onClick={() => removeTodo(todo)} icon={<DeleteOutlined />} />
 		</li>
 	)

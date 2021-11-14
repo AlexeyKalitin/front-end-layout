@@ -31,7 +31,6 @@ function App() {
 		if (Math.ceil(todos.length / todosPerPage) < currentPage && currentPage > 1) {
 			setCurrentPage(prev => prev - 1)
 		}
-    console.log(todos)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [todos.length])
 
@@ -51,8 +50,9 @@ function App() {
 	const patchItemAPI = async elem => {
 		try {
 			setIsLoaded(true)
-			await axios.put(`/todo/${elem.uuid}`, elem)
+			const newElem = await axios.put(`/todo/${elem.uuid}`, elem)
 			setIsLoaded(false)
+			return newElem.data
 		} catch (e) {
 			setAPIResponseError(e.message)
 		}
@@ -73,7 +73,7 @@ function App() {
 			setIsLoaded(true)
 			const newElem = await axios.post(`/todo`, item)
 			setIsLoaded(false)
-      return newElem
+			return newElem.data
 		} catch (e) {
 			setAPIResponseError(e.message)
 		}
@@ -93,26 +93,28 @@ function App() {
 			elem.isDone = value
 		}
 		if (field === 'name') {
-			elem.name = value
+			elem.name = value.toString()
 		}
 	}
 
-	const handlerChangeTodoCondition = elem => {
+	const handlerChangeTodoCondition = async elem => {
 		replaceElementField(elem, 'done', !elem.isDone)
-		todos[todos.indexOf(elem)] = elem
+		const newElem = await patchItemAPI(elem)
+		todos[todos.indexOf(elem)] = newElem
 		setTodos(todos.slice(0))
-		patchItemAPI(elem)
 	}
 
-	const handlerChangeTask = (elem, newText) => {
+	const handlerChangeTask = async (elem, newText) => {
 		replaceElementField(elem, 'name', newText.slice(0))
-		todos[todos.indexOf(elem)] = elem
+		const newElem = await patchItemAPI(elem)
+		console.log(newElem)
+		todos[todos.indexOf(elem)] = newElem
 		setTodos(todos.slice(0))
-		patchItemAPI(elem)
 	}
 
-	const handlerNewElemSetter = newElem => {
-		setTodos([...todos, setItemAPI(newElem)])
+	const handlerNewElemSetter = async newElem => {
+		
+		setTodos([...todos, await setItemAPI(newElem)])
 	}
 
 	const handlerSetSortStatus = (sortStatus, filterBy) => {

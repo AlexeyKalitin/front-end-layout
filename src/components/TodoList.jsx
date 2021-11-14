@@ -4,6 +4,7 @@ import { List } from 'antd'
 import 'antd/dist/antd.css'
 
 function TodoList({ todos, removeTodo, changeTodoCondition, changeTask }) {
+	console.log(todos)
 	if (todos.length === 0) {
 		return <h1 style={{ marginTop: '2vw' }}>Nothing...</h1>
 	} else {
