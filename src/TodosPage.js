@@ -6,9 +6,9 @@ import TodoList from './components/TodoList'
 import { Pagination } from 'antd'
 import 'antd/dist/antd.css'
 const axios = require('axios').default
-axios.defaults.baseURL = process.env['REACT_APP_SERVER_URL']
+axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL
 axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('accessToken')
-
+console.log("Database_URL", process.env.REACT_APP_SERVER_URL);
 function App() {
 	const [isLoaded, setIsLoaded] = useState(false)
 	const [APIResponseError, setAPIResponseError] = useState(false)
