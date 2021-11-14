@@ -91,6 +91,7 @@ function SignIn(props) {
 	async function login() {
 		try {
 			const token = await axios.post(`${sereverUrl}/signin`, { email: email, password: password })
+			alert("Success login")
 			localStorage.setItem('accessToken', token.data.accessToken)
 			await props.history.replace('/todos')
 		} catch (e) {

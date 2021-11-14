@@ -92,6 +92,7 @@ function Register(props) {
 	async function onRegister() {
 		try {
 			await axios.post(`${sereverUrl}/signup`, { email: email, password: password })
+			alert("Success registeration")
 			props.history.replace('/login',{ email: email, password: password })
 		} catch (e) {
 			alert(e.response.data.message)
